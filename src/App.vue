@@ -1,7 +1,5 @@
 <template>
-<div>
-    VUE APP
-</div>
+<router-view />
 </template>
 
 <script>
