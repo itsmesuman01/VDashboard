@@ -1,5 +1,6 @@
 import {createWebHistory, createRouter} from 'vue-router'
 import Login from './components/auth/Login.vue'
+import Register from './components/auth/Register.vue'
 import VerifyOtp from './components/auth/VerifyOtp.vue'
 import VerifyEmail from './components/auth/VerifyEmail.vue'
 import UpdatePassword from './components/auth/UpdatePassword.vue'
@@ -11,6 +12,11 @@ const routes = [
         name: 'Login',
         path: '/',
         component: Login
+    },
+    {
+        name: 'Register',
+        path: '/register',
+        component: Register
     },
     {
         name: 'VerifyEmail',

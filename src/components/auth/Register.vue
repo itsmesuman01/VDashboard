@@ -1,16 +1,14 @@
 <template>
 <img class="logo" src="../../assets/logo.png" alt="Logo" />
-<h1>LOGIN</h1>
-<div class="login">
+<h1>REGISTRATION</h1>
+<div class="register">
     <form>
+        <input v-model="form.name" type="text" placeholder="Enter Name" required />
         <input v-model="form.email" type="email" placeholder="Enter Email" required />
         <input v-model="form.password" type="password" placeholder="Enter Password" required />
-        <button v-on:click="submitForm" :disabled="loading">LOGIN</button>
+        <button v-on:click="submitForm" :disabled="loading">SIGN UP</button>
         <p>
-            <router-link class="button-link" to="/register">REGISTRATION</router-link>
-        </p>
-        <p>
-            <router-link class="button-link" to="/verifyemail">FORGET PASSWORD</router-link>
+            <router-link class="button-link" to="/">SIGN IN</router-link>
         </p>
     </form>
 </div>
@@ -20,7 +18,7 @@
 import axios from 'axios';
 
 export default {
-    name: 'LoginPage',
+    name: 'RegisterPage',
     mounted() {
         let data = localStorage.getItem('access_token');
         if (data)
@@ -31,6 +29,7 @@ export default {
     data() {
         return {
             form: {
+                name: '',
                 email: '',
                 password: ''
             },
@@ -39,28 +38,28 @@ export default {
     },
     methods: {
         async submitForm() {
-            if (!this.form.email || !this.form.password) {
+            if (!this.form.name || !this.form.email || !this.form.password) {
                 alert('Please fill out all fields.');
                 return;
             }
 
             this.loading = true;
 
-            await axios.post('http://127.0.0.1:8000/api/login', {
+            await axios.post('http://127.0.0.1:8000/api/register', {
+                    id: 0,
+                    name: this.form.name,
                     email: this.form.email,
                     password: this.form.password
                 })
                 .then(response => {
-                    const access_token = response.data.access_token;
-                    localStorage.setItem('access_token', JSON.stringify(access_token));
                     alert(response.data.message);
                     this.$router.push({
-                        name: 'Home'
+                        name: 'Login'
                     })
                 })
                 .catch(error => {
                     console.warn(error)
-                    alert(error.response.data.message);
+                    alert(error.response.data.errors.password);
                 })
                 .finally(() => {
                     this.loading = false;
@@ -79,7 +78,7 @@ h1 {
     width: 20%;
 }
 
-.login input {
+.register input {
     width: 300px;
     height: 40px;
     padding-left: 20px;
@@ -90,7 +89,7 @@ h1 {
     border: 1px solid #e0530d;
 }
 
-.login button {
+.register button {
     width: 320px;
     height: 40px;
     border: 1px solid #e0530d;
@@ -99,7 +98,7 @@ h1 {
     cursor: pointer;
 }
 
-.login button:disabled {
+.register button:disabled {
     background-color: #e0530d;
     cursor: not-allowed;
 }
@@ -117,13 +116,4 @@ h1 {
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
 }
-
-/* .button-link:hover {
-    background-color: #e0530d;
-    color: white;
-}
-
-.button-link:active {
-    background-color: navy;
-} */
 </style>
