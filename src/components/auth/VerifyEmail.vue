@@ -2,9 +2,9 @@
 <img class="logo" src="../../assets/logo.png" alt="Logo" />
 <h1>VERIFY EMAIL</h1>
 <div class="verify">
-    <form>
+    <form @submit.prevent="submitForm">
         <input v-model="form.email" type="email" placeholder="Enter Email" required />
-        <button v-on:click="submitForm" :disabled="loading">SEND</button>
+        <button type="submit" :disabled="loading">SEND</button>
     </form>
 </div>
 </template>
@@ -15,11 +15,7 @@ import axios from 'axios';
 export default {
     name: 'VerifyEmailPage',
     mounted() {
-        let data = localStorage.getItem('access_token');
-        if (data)
-            this.$router.push({
-                name: 'Home'
-            })
+        this.$mountTo(this.$router);
     },
     data() {
         return {

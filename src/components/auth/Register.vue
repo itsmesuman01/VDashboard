@@ -2,11 +2,11 @@
 <img class="logo" src="../../assets/logo.png" alt="Logo" />
 <h1>REGISTRATION</h1>
 <div class="register">
-    <form>
+    <form @submit.prevent="submitForm">
         <input v-model="form.name" type="text" placeholder="Enter Name" required />
         <input v-model="form.email" type="email" placeholder="Enter Email" required />
         <input v-model="form.password" type="password" placeholder="Enter Password" required />
-        <button v-on:click="submitForm" :disabled="loading">SIGN UP</button>
+        <button type="submit" :disabled="loading">SIGN UP</button>
         <p>
             <router-link class="button-link" to="/">SIGN IN</router-link>
         </p>
@@ -20,11 +20,7 @@ import axios from 'axios';
 export default {
     name: 'RegisterPage',
     mounted() {
-        let data = localStorage.getItem('access_token');
-        if (data)
-            this.$router.push({
-                name: 'Home'
-            })
+        this.$mountTo(this.$router);
     },
     data() {
         return {

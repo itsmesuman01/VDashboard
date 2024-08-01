@@ -2,10 +2,10 @@
 <img class="logo" src="../../assets/logo.png" alt="Logo" />
 <h1>UPDATE PASSWORD</h1>
 <div class="update">
-    <form>
+    <form @submit.prevent="submitForm">
         <input v-model="form.new_password" type="password" placeholder="Enter New Password" required />
         <input v-model="form.new_password_confirmation" type="password" placeholder="Re-enter New Password" required />
-        <button v-on:click="submitForm" :disabled="loading">UPDATE</button>
+        <button type="submit" :disabled="loading">UPDATE</button>
     </form>
 </div>
 </template>
@@ -16,11 +16,7 @@ import axios from 'axios';
 export default {
     name: 'UpdatePasswordPage',
     mounted() {
-        let data = localStorage.getItem('access_token');
-        if (data)
-            this.$router.push({
-                name: 'Home'
-            })
+        this.$mountTo(this.$router);
     },
     data() {
         return {
