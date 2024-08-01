@@ -9,7 +9,4 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-    color: #e0530d
-}
 </style>

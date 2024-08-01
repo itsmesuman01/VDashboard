@@ -1,0 +1,52 @@
+@import 'var';
+
+@mixin h1 {
+    color: $globalColor;
+}
+
+@mixin button {
+    width: 320px;
+    height: 40px;
+    border: 1px solid $globalColor;
+    color: white;
+    background-color: $globalColor;
+    cursor: pointer;
+}
+
+@mixin input {
+    width: 300px;
+    height: 40px;
+    padding-left: 20px;
+    display: block;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid $globalColor;
+}
+
+@mixin button-link {
+    display: inline-block;
+    width: 320px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border: 1px solid $globalColor;
+    color: white;
+    background-color: $globalColor;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button-link {
+    @include button-link;
+
+    &:hover {
+        background-color: red;
+        color: white;
+    }
+
+    &:active {
+        background-color: black;
+    }
+}
