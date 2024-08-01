@@ -46,7 +46,7 @@ export default {
 
             this.loading = true;
 
-            await axios.post('http://127.0.0.1:8000/api/login', {
+            await axios.post(`${process.env.VUE_APP_API_URL}login`, {
                     email: this.form.email,
                     password: this.form.password
                 })

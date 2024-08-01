@@ -38,7 +38,7 @@ export default {
 
             this.loading = true;
 
-            await axios.post('http://127.0.0.1:8000/api/verifyemail', {
+            await axios.post(`${process.env.VUE_APP_API_URL}verifyemail`, {
                     email: this.form.email,
                 })
                 .then(response => {

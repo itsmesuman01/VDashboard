@@ -45,7 +45,7 @@ export default {
 
             this.loading = true;
 
-            await axios.post('http://127.0.0.1:8000/api/register', {
+            await axios.post(`${process.env.VUE_APP_API_URL}register`, {
                     id: 0,
                     name: this.form.name,
                     email: this.form.email,

@@ -40,7 +40,7 @@ export default {
 
             this.loading = true;
 
-            await axios.post('http://127.0.0.1:8000/api/updatepassword', {
+            await axios.post(`${process.env.VUE_APP_API_URL}updatepassword`, {
                     new_password: this.form.new_password,
                     new_password_confirmation: this.form.new_password_confirmation
                 })
