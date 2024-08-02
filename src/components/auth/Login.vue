@@ -47,9 +47,11 @@ export default {
                     password: this.form.password
                 })
                 .then(response => {
-                    const access_token = response.data.access_token;
-                    localStorage.setItem('access_token', JSON.stringify(access_token));
-                    alert(response.data.message);
+                    const { access_token, user, message } = response.data;
+                    const permissions = JSON.stringify(user.roles.permissions);
+                    localStorage.setItem('access_token', access_token);
+                    localStorage.setItem('permissions', permissions);
+                    alert(message);
                     this.$router.push({
                         name: 'Home'
                     })

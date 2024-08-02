@@ -5,6 +5,7 @@ import VerifyOtp from './components/auth/VerifyOtp.vue'
 import VerifyEmail from './components/auth/VerifyEmail.vue'
 import UpdatePassword from './components/auth/UpdatePassword.vue'
 import Home from './components/Home.vue'
+import User from './components/User.vue'
 import PageNotFound from './components/PageNotFound.vue'
 
 const routes = [
@@ -37,6 +38,11 @@ const routes = [
         name: 'Home',
         path: '/home',
         component: Home
+    },
+    {
+        name: 'User',
+        path: '/user',
+        component: User
     },
     {
         name: 'PageNotFound',
