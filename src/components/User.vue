@@ -14,7 +14,7 @@
                     <td>{{ item.name }}</td>
                     <td>{{ item.email }}</td>
                     <td>
-                        <router-link :to="'/update-restaurant/' + item.id">Update</router-link>
+                        <router-link :to="'/' + item.id">Update</router-link>
                         <button :disabled="!hasPermission('user.delete') || loading" v-on:click="deleteRecord(item.id)">Delete</button>
                     </td>
                 </tr>
@@ -62,10 +62,6 @@ export default {
             this.users = records;
         } catch (error) {
             console.warn(error);
-            alert(error.response?.data?.message || 'An error occurred.');
-            if (error.response?.status === 401) {
-                this.$router.push({ name: 'Login' });
-            }
         } finally {
             this.loading = false;
         }
@@ -94,10 +90,6 @@ export default {
                 this.users = this.users.filter(user => user.id !== id);
             } catch (error) {
                 console.warn(error);
-                alert(error.response?.data?.message || 'An error occurred.');
-                if (error.response?.status === 401) {
-                    this.$router.push({ name: 'Login' });
-                }
             } finally {
                 this.loading = false;
             }

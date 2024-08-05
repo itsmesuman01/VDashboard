@@ -2,8 +2,8 @@
 <div class="sidebar">
     <h2 class="sidebar-title">Menu</h2>
     <ul class="sidebar-menu">
-        <li>
-            <router-link to="/">Role Permission</router-link>
+        <li v-if="hasPermission('role.read')">
+            <router-link to="/role">Role</router-link>
         </li>
         <li v-if="hasPermission('user.update')">
             <router-link to="/user">User</router-link>
@@ -12,7 +12,6 @@
 </div>
 </template>
 
-  
 <script>
 export default {
     name: 'SidebarPage',
@@ -30,7 +29,6 @@ export default {
 };
 </script>
 
-  
 <style scoped>
 .sidebar-menu {
     list-style-type: none;
