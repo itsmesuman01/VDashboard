@@ -6,40 +6,48 @@
         <div class="content">
             <div v-if="showrole === 0">
                 <table v-if="hasPermission('role.read')">
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Action</th>
-                    </tr>
-                    <tr v-for="item in roles" :key="item.id">
-                        <td>{{ item.id }}</td>
-                        <td>{{ item.name }}</td>
-                        <td>
-                            <button :disabled="!hasPermission('role.update') || loading" v-on:click="editRecord(item.id)">Edit</button>
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in roles" :key="item.id">
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>
+                                <button :disabled="!hasPermission('role.update') || loading" @click="editRecord(item.id)">Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
             <div v-else>
                 <table>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Create</th>
-                        <th>Read</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                        <th>Action</th>
-                    </tr>
-                    <tr>
-                        <td>Id</td>
-                        <td>Name</td>
-                        <td>Create</td>
-                        <td>Read</td>
-                        <td>Update</td>
-                        <td>Delete</td>
-                        <td>Action</td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Create</th>
+                            <th>Read</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Id</td>
+                            <td>Name</td>
+                            <td>Create</td>
+                            <td>Read</td>
+                            <td>Update</td>
+                            <td>Delete</td>
+                            <td>Action</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -49,10 +57,11 @@
 </template>
 
 <script>
-import Header from './layout/Header.vue'
-import Sidebar from './layout/Sidebar.vue'
-import Footer from './layout/Footer.vue'
-import axios from 'axios'
+import Header from './layout/Header.vue';
+import Sidebar from './layout/Sidebar.vue';
+import Footer from './layout/Footer.vue';
+import { fetchData } from '../cacheService';
+
 export default {
     name: 'HomePage',
     components: {
@@ -76,19 +85,20 @@ export default {
             return;
         }
 
+        const apiUrl = `${process.env.VUE_APP_API_URL}auth/role`;
+
         try {
-            const response = await axios.get(`${process.env.VUE_APP_API_URL}auth/role`, {
+            const response = await fetchData(apiUrl, {
                 headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
 
-            const { records } = response.data;
-            this.roles = records;
+            this.roles = response.records || [];
         } catch (error) {
             console.warn(error);
-            alert(error.response?.data?.message || 'An error occurred.');
-            if (error.response?.status === 401) {
+            alert(error.message || 'An error occurred.');
+            if (error.status === 401) {
                 this.$router.push({ name: 'Login' });
             }
         } finally {
@@ -102,27 +112,23 @@ export default {
         async editRecord(id) {
             this.loading = true;
 
-            await axios.get(`${process.env.VUE_APP_API_URL}auth/role/edit`, {
+            const apiUrl = `${process.env.VUE_APP_API_URL}auth/role/edit?id=${id}`;
+            try {
+                const response = await fetchData(apiUrl, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                     },
-                    params: {
-                        id: id
-                    }
-                }).then(response => {
-                    const { permission } = response.data.records
-                    // alert(JSON.stringify(permission, null, 2));
-                    this.permissions = permission
-                    this.showrole = 1
-                })
-                .catch(error => {
-                    console.warn(error)
-                })
-                .finally(() => {
-                    this.loading = false;
                 });
+
+                this.permissions = response.permission || [];
+                this.showrole = 1;
+            } catch (error) {
+                console.warn(error);
+            } finally {
+                this.loading = false;
+            }
         },
-    }
+    },
 };
 </script>
 
