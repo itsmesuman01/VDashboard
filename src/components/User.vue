@@ -30,8 +30,10 @@ import Header from './layout/Header.vue'
 import Sidebar from './layout/Sidebar.vue'
 import Footer from './layout/Footer.vue'
 import axios from 'axios'
+import { fetchData } from '../cacheService'
+
 export default {
-    name: 'HomePage',
+    name: 'UserPage',
     components: {
         Header,
         Sidebar,
@@ -51,14 +53,16 @@ export default {
             return;
         }
 
+        const apiUrl = `${process.env.VUE_APP_API_URL}auth/user`;
+
         try {
-            const response = await axios.get(`${process.env.VUE_APP_API_URL}auth/user`, {
+            const response = await fetchData(apiUrl, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
 
-            const { records } = response.data;
+            const { records } = response;
             this.users = records;
         } catch (error) {
             console.warn(error);
@@ -81,6 +85,7 @@ export default {
                 await axios.delete(`${process.env.VUE_APP_API_URL}auth/user`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                        'Content-Type': 'application/json'
                     },
                     data: {
                         id: id
