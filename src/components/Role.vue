@@ -18,7 +18,9 @@
                             <td>{{ item.id }}</td>
                             <td>{{ item.name }}</td>
                             <td>
-                                <button :disabled="!hasPermission('role.update') || loading" @click="editRecord(item.id)">Edit</button>
+                                <button :disabled="!hasPermission('role.update') || loading" @click="editRecord(item.id)">
+                                    Edit
+                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -40,13 +42,24 @@
                         <tr v-for="(permType, index) in permissionCategories" :key="index">
                             <td></td>
                             <td>{{ permType.name }}</td>
-                            <td><input type="checkbox" :checked="permType.create" @change="updatePermission(permType.name, 'create', $event)" /></td>
-                            <td><input type="checkbox" :checked="permType.read" @change="updatePermission(permType.name, 'read', $event)" /></td>
-                            <td><input type="checkbox" :checked="permType.update" @change="updatePermission(permType.name, 'update', $event)" /></td>
-                            <td><input type="checkbox" :checked="permType.delete" @change="updatePermission(permType.name, 'delete', $event)" /></td>
+                            <td>
+                                <input type="checkbox" :checked="permType.create" @change="updatePermission(permType.name, 'create', $event)" />
+                            </td>
+                            <td>
+                                <input type="checkbox" :checked="permType.read" @change="updatePermission(permType.name, 'read', $event)" />
+                            </td>
+                            <td>
+                                <input type="checkbox" :checked="permType.update" @change="updatePermission(permType.name, 'update', $event)" />
+                            </td>
+                            <td>
+                                <input type="checkbox" :checked="permType.delete" @change="updatePermission(permType.name, 'delete', $event)" />
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+                <button @click="submitPermissions(currentRoleId)" :disabled="loading">
+                    Save Permissions
+                </button>
             </div>
         </div>
     </div>
@@ -54,12 +67,11 @@
 </div>
 </template>
 
-  
 <script>
 import Header from './layout/Header.vue';
 import Sidebar from './layout/Sidebar.vue';
 import Footer from './layout/Footer.vue';
-import { fetchData } from '../cacheService';
+import axios from 'axios';
 
 export default {
     name: 'HomePage',
@@ -76,6 +88,7 @@ export default {
             allPermissions: [],
             specificPermissions: [],
             permissionCategories: [],
+            currentRoleId: null,
         };
     },
     async mounted() {
@@ -89,17 +102,17 @@ export default {
         const apiUrl = `${process.env.VUE_APP_API_URL}auth/role`;
 
         try {
-            const response = await fetchData(apiUrl, {
+            const response = await axios.get(apiUrl, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
 
-            this.roles = response.records || [];
+            this.roles = response.data.records || [];
         } catch (error) {
             console.warn(error);
             alert(error.message || 'An error occurred.');
-            if (error.status === 401) {
+            if (error.response && error.response.status === 401) {
                 this.$router.push({ name: 'Login' });
             }
         } finally {
@@ -112,19 +125,23 @@ export default {
         },
         async editRecord(id) {
             this.loading = true;
+            this.currentRoleId = id;
 
             const apiUrl = `${process.env.VUE_APP_API_URL}auth/role/edit?id=${id}`;
             try {
-                const response = await fetchData(apiUrl, {
+                const response = await axios.get(apiUrl, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                     },
                 });
 
-                this.allPermissions = response.records.allpermissions || [];
-                this.specificPermissions = response.records.specificpermissions || [];
+                this.allPermissions = response.data.records.allpermissions || [];
+                this.specificPermissions = response.data.records.specificpermissions || [];
 
-                this.permissionCategories = this.organizePermissions(this.allPermissions, this.specificPermissions);
+                this.permissionCategories = this.organizePermissions(
+                    this.allPermissions,
+                    this.specificPermissions
+                );
 
                 this.showrole = 1;
             } catch (error) {
@@ -159,11 +176,36 @@ export default {
                 this.specificPermissions = this.specificPermissions.filter(p => p.name !== permissionName);
             }
         },
+        async submitPermissions(roleId) {
+            this.loading = true;
+            // Prepare the permissions to be sent
+            const storePermissionsIds = this.specificPermissions.map(perm => {
+                const permission = this.allPermissions.find(p => p.name === perm.name);
+                return permission ? permission.id : null;
+            }).filter(id => id !== null);
+
+            try {
+                await axios.post(`${process.env.VUE_APP_API_URL}auth/role`, {
+                    role_id: roleId,
+                    store_permissions_id: storePermissionsIds,
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                    },
+                });
+                alert('Permissions updated successfully');
+            } catch (error) {
+                console.warn(error);
+                alert(error.message || 'An error occurred while updating permissions.');
+            } finally {
+                this.loading = false;
+            }
+        },
     },
 };
 </script>
 
-  
 <style scoped>
 .home-container {
     display: flex;
