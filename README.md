@@ -1,4 +1,4 @@
-# restro
+# base vue
 
 ## Project setup
 ```
