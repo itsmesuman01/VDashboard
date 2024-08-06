@@ -10,7 +10,7 @@ export default {
     name: 'HeaderPage',
     methods: {
         logout() {
-            localStorage.removeItem('access_token');
+            ['access_token', 'permissions'].forEach(key => localStorage.removeItem(key));
             this.$router.push({
                 name: 'Login'
             });

@@ -34,18 +34,16 @@
                             <th>Read</th>
                             <th>Update</th>
                             <th>Delete</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Id</td>
-                            <td>Name</td>
-                            <td>Create</td>
-                            <td>Read</td>
-                            <td>Update</td>
-                            <td>Delete</td>
-                            <td>Action</td>
+                        <tr v-for="(permType, index) in permissionCategories" :key="index">
+                            <td></td>
+                            <td>{{ permType.name }}</td>
+                            <td><input type="checkbox" :checked="permType.create" @change="updatePermission(permType.name, 'create', $event)" /></td>
+                            <td><input type="checkbox" :checked="permType.read" @change="updatePermission(permType.name, 'read', $event)" /></td>
+                            <td><input type="checkbox" :checked="permType.update" @change="updatePermission(permType.name, 'update', $event)" /></td>
+                            <td><input type="checkbox" :checked="permType.delete" @change="updatePermission(permType.name, 'delete', $event)" /></td>
                         </tr>
                     </tbody>
                 </table>
@@ -56,6 +54,7 @@
 </div>
 </template>
 
+  
 <script>
 import Header from './layout/Header.vue';
 import Sidebar from './layout/Sidebar.vue';
@@ -74,7 +73,9 @@ export default {
             roles: [],
             loading: true,
             showrole: 0,
-            permissions: []
+            allPermissions: [],
+            specificPermissions: [],
+            permissionCategories: [],
         };
     },
     async mounted() {
@@ -120,7 +121,11 @@ export default {
                     },
                 });
 
-                this.permissions = response.permission || [];
+                this.allPermissions = response.records.allpermissions || [];
+                this.specificPermissions = response.records.specificpermissions || [];
+
+                this.permissionCategories = this.organizePermissions(this.allPermissions, this.specificPermissions);
+
                 this.showrole = 1;
             } catch (error) {
                 console.warn(error);
@@ -128,10 +133,37 @@ export default {
                 this.loading = false;
             }
         },
+        organizePermissions(allPermissions, specificPermissions) {
+            const categories = {};
+
+            allPermissions.forEach(perm => {
+                const [name, action] = perm.name.split('.');
+                if (!categories[name]) {
+                    categories[name] = { name, create: false, read: false, update: false, delete: false };
+                }
+                if (specificPermissions.some(p => p.name === perm.name)) {
+                    categories[name][action] = true;
+                }
+            });
+
+            return Object.values(categories);
+        },
+        updatePermission(name, action, event) {
+            const isChecked = event.target.checked;
+            const permissionName = `${name}.${action}`;
+            if (isChecked) {
+                if (!this.specificPermissions.some(p => p.name === permissionName)) {
+                    this.specificPermissions.push({ name: permissionName });
+                }
+            } else {
+                this.specificPermissions = this.specificPermissions.filter(p => p.name !== permissionName);
+            }
+        },
     },
 };
 </script>
 
+  
 <style scoped>
 .home-container {
     display: flex;
