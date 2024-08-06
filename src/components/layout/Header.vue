@@ -1,7 +1,9 @@
 <template>
 <div class="header">
-    <router-link class="button-link" to="/home">HOME</router-link>
-    <a @click.prevent="logout">LOGOUT</a>
+    <div class="space">
+        <router-link to="/home">HOME</router-link>
+        <a @click.prevent="logout">LOGOUT</a>
+    </div>
 </div>
 </template>
 
@@ -19,10 +21,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .header {
-    background-color: #333;
-    overflow: hidden;
+    @include flex-scss;
+    background-color: black;
+    height: 60px;
+    border-bottom: 5px solid white;
 }
 
 .header a,
@@ -35,5 +39,10 @@ export default {
     font-size: 16px;
     margin-right: 4px;
     font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-size: large;
+}
+
+.header .space {
+    margin-left: 290px;
 }
 </style>
