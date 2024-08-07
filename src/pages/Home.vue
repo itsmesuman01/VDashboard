@@ -1,13 +1,19 @@
 <template>
-<div class="home-container">
-    <Header />
-    <div class="main-content">
+<div class="container">
+    <div class="sidebar">
         <Sidebar />
-        <div class="content">
+    </div>
+    <div class="maincontent">
+        <div class="header">
+            <Header />
+        </div>
+        <div class="section">
             <h1>Hello, Welcome To Home Page</h1>
         </div>
+        <div class="footer">
+            <Footer />
+        </div>
     </div>
-    <Footer />
 </div>
 </template>
 

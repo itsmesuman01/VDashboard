@@ -1,7 +1,7 @@
 <template>
-<div class="sidebar">
-    <h2 class="sidebar-title">Menu</h2>
-    <ul class="sidebar-menu">
+<div class="side">
+    <h2 class="side-title">Menu</h2>
+    <ul class="side-menu">
         <li v-if="hasPermission('role.read')">
             <router-link to="/role">Role</router-link>
         </li>
@@ -12,6 +12,7 @@
 </div>
 </template>
 
+  
 <script>
 export default {
     name: 'SidebarPage',
@@ -19,7 +20,7 @@ export default {
         return {
             permission: [],
             permissionNames: [],
-        }
+        };
     },
     methods: {
         hasPermission(permissionName) {
@@ -29,24 +30,42 @@ export default {
 };
 </script>
 
+  
 <style scoped>
-.sidebar-menu {
+.side {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: red;
+    height: 100%;
+    width: 20vw;
+}
+
+.side-title {
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.side-menu {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-.sidebar-menu li {
-    padding: 10px 15px;
+.side-menu li {
+    margin: 0;
 }
 
-.sidebar-menu a {
+.side-menu a {
     color: #fff;
     text-decoration: none;
     display: block;
+    padding: 10px 15px;
+    font-size: 18px;
 }
 
-.sidebar-menu a:hover {
+.side-menu a:hover {
     background-color: #575757;
 }
 </style>

@@ -1,9 +1,13 @@
 <template>
-<div class="home-container">
-    <Header />
-    <div class="main-content">
+<div class="container">
+    <div class="sidebar">
         <Sidebar />
-        <div class="content">
+    </div>
+    <div class="maincontent">
+        <div class="header">
+            <Header />
+        </div>
+        <div class="section">
             <div v-if="showrole === 0">
                 <table v-if="hasPermission('role.read')">
                     <thead>
@@ -62,8 +66,10 @@
                 </button>
             </div>
         </div>
+        <div class="footer">
+            <Footer />
+        </div>
     </div>
-    <Footer />
 </div>
 </template>
 

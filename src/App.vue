@@ -23,13 +23,59 @@ export default {
     text-align: center;
 }
 
-.logo {
-    width: 20%;
-}
-
-body {
+* {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
+}
+
+// LAYOUT CSS
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    background-color: red;
+    height: 100%;
+    width: 20vw;
+}
+
+.maincontent {
+    background-color: blue;
+    height: 100%;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: orange;
+    height: 60px;
+    overflow: hidden;
+}
+
+.section {
+    background-color: yellow;
+    flex: 1;
+    overflow: hidden;
+    padding: 0px 10px 0px 10px;
+    border-top: 5px solid white;
+    border-bottom: 5px solid white;
+}
+
+.footer {
+    background-color: green;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+// OTHER CSS
+.logo {
+    width: 20%;
 }
 
 h1 {
@@ -78,37 +124,6 @@ input {
 
 .button-link :active {
     background-color: black;
-}
-
-.home-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-
-header {
-    background-color: #f8f9fa;
-    padding: 20px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.main-content {
-    display: flex;
-    flex: 1;
-    background-color: #e9ecef;
-}
-
-.sidebar {
-    width: 250px;
-    background-color: #343a40;
-    color: #fff;
-    padding: 20px;
-}
-
-.content {
-    flex: 1;
-    padding: 20px;
 }
 
 table {

@@ -16,6 +16,9 @@ footer {
     color: white;
     padding: 10px;
     text-align: center;
-    border-top: 3px solid white;
+    align-items: center;
+    font-size: 14px;
+    width: 100%;
+    height: 60px;
 }
 </style>
