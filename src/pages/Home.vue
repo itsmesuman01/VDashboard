@@ -12,9 +12,7 @@
 </template>
 
 <script>
-import Header from '../components/layout/Header.vue'
-import Sidebar from '../components/layout/Sidebar.vue'
-import Footer from '../components/layout/Footer.vue'
+import { Header, Sidebar, Footer } from '../components/layout';
 export default {
     name: 'HomePage',
     components: {
