@@ -72,6 +72,7 @@ import Header from './layout/Header.vue';
 import Sidebar from './layout/Sidebar.vue';
 import Footer from './layout/Footer.vue';
 import axios from 'axios';
+import { fetchData } from '../cacheService'
 
 export default {
     name: 'HomePage',
@@ -102,19 +103,16 @@ export default {
         const apiUrl = `${process.env.VUE_APP_API_URL}auth/role`;
 
         try {
-            const response = await axios.get(apiUrl, {
+            const response = await fetchData(apiUrl, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
 
-            this.roles = response.data.records || [];
+            const { records } = response;
+            this.roles = records;
         } catch (error) {
             console.warn(error);
-            alert(error.message || 'An error occurred.');
-            if (error.response && error.response.status === 401) {
-                this.$router.push({ name: 'Login' });
-            }
         } finally {
             this.loading = false;
         }

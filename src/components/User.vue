@@ -8,11 +8,13 @@
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Role</th>
                     <th>Action</th>
                 </tr>
                 <tr v-for="item in users" :key="item.id">
                     <td>{{ item.name }}</td>
                     <td>{{ item.email }}</td>
+                    <td>{{ item.roles.name }}</td>
                     <td>
                         <router-link class='button-link' :to="'/' + item.id">Update</router-link>&nbsp;
                         <button :disabled="!hasPermission('user.delete') || loading" v-on:click="deleteRecord(item.id)">Delete</button>
