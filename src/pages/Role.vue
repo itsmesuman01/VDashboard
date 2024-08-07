@@ -40,7 +40,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="(permType, index) in permissionCategories" :key="index">
-                            <td></td>
+                            <td>{{ index + 1 }}</td>
                             <td>{{ permType.name }}</td>
                             <td>
                                 <input type="checkbox" :checked="permType.create" @change="updatePermission(permType.name, 'create', $event)" />
@@ -68,9 +68,9 @@
 </template>
 
 <script>
-import Header from './layout/Header.vue';
-import Sidebar from './layout/Sidebar.vue';
-import Footer from './layout/Footer.vue';
+import Header from '../components/layout/Header.vue'
+import Sidebar from '../components/layout/Sidebar.vue'
+import Footer from '../components/layout/Footer.vue'
 import axios from 'axios';
 import { fetchData } from '../cacheService'
 
@@ -193,6 +193,7 @@ export default {
                     },
                 });
                 alert('Permissions updated successfully');
+                this.$router.push({ name: 'Home' });
             } catch (error) {
                 console.warn(error);
                 alert(error.message || 'An error occurred while updating permissions.');
