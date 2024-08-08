@@ -1,6 +1,6 @@
 <template>
 <footer>
-    @DESIGN AND DEVELOP BY SUMAN PANDEY
+    © DESIGN AND DEVELOP BY SUMAN PANDEY
 </footer>
 </template>
 
@@ -12,13 +12,13 @@ export default {
 
 <style scoped>
 footer {
-    background-color: black;
+    background-color: #fca25c;
     color: white;
     padding: 10px;
     text-align: center;
     align-items: center;
     font-size: 14px;
     width: 100%;
-    height: 60px;
+    height: 40px;
 }
 </style>

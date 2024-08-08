@@ -7,7 +7,6 @@
 </div>
 </template>
 
-  
 <script>
 export default {
     name: 'HeaderPage',
@@ -20,12 +19,11 @@ export default {
 }
 </script>
 
-  
 <style scoped>
 .head {
     display: flex;
     align-items: center;
-    background-color: black;
+    background-color: #ff7000;
     height: 60px;
 }
 

@@ -62,7 +62,7 @@
                     </tbody>
                 </table>
                 <button @click="submitPermissions(currentRoleId)" :disabled="loading">
-                    Save Permissions
+                    Save
                 </button>
             </div>
         </div>

@@ -6,7 +6,8 @@ import VerifyEmail from './pages/auth/VerifyEmail.vue'
 import UpdatePassword from './pages/auth/UpdatePassword.vue'
 import Home from './pages/Home.vue'
 import Role from './pages/Role.vue'
-import User from './pages/User.vue'
+import User from './pages/user/User.vue'
+import UserAdd from './pages/user/UserAdd.vue'
 import PageNotFound from './components/PageNotFound.vue'
 
 const routes = [
@@ -44,6 +45,11 @@ const routes = [
         name: 'User',
         path: '/user',
         component: User
+    },
+    {
+        name: 'UserAdd',
+        path: '/user-add/:id',
+        component: UserAdd
     },
     {
         name: 'Role',

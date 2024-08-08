@@ -36,17 +36,17 @@ export default {
 }
 
 .sidebar {
-    background-color: red;
     height: 100%;
-    width: 20vw;
+    width: 15vw;
 }
 
 .maincontent {
-    background-color: blue;
+    background-color: #ffd9ad;
     height: 100%;
-    width: 80vw;
+    flex: 1;
     display: flex;
     flex-direction: column;
+    padding-left: 5px;
 }
 
 .header {
@@ -56,17 +56,17 @@ export default {
 }
 
 .section {
-    background-color: yellow;
+    background-color: white;
     flex: 1;
     overflow: hidden;
     padding: 0px 10px 0px 10px;
-    border-top: 5px solid white;
-    border-bottom: 5px solid white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
 }
 
 .footer {
     background-color: green;
-    height: 60px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,11 +83,11 @@ h1 {
 }
 
 button {
-    width: 160px;
+    width: 100px;
     height: 40px;
-    border: 1px solid $globalColor;
+    border: 1px solid rgb(226, 57, 57);
     color: white;
-    background-color: $globalColor;
+    background-color: rgb(226, 57, 57);
     cursor: pointer;
     border-radius: 50px;
 }
@@ -105,13 +105,13 @@ input {
 
 .button-link {
     display: inline-block;
-    width: 160px;
+    width: 100px;
     height: 40px;
     line-height: 38px;
     text-align: center;
-    border: 1px solid $globalColor;
+    border: 1px solid #04AA6D;
     color: white;
-    background-color: red;
+    background-color: #04AA6D;
     text-decoration: none;
     cursor: pointer;
     border-radius: 50px;
@@ -138,7 +138,7 @@ th,
 td {
     padding: 6px;
     border-bottom: 1px solid #ddd;
-    border: 1px solid black;
+    border: 1px solid orange;
     text-align: center;
 }
 
@@ -147,11 +147,28 @@ thead {
 }
 
 th {
-    background-color: $globalColor;
+    background-color: orange;
     color: #fff;
 }
 
 tr:hover {
     background-color: white;
+}
+
+.dropdown {
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid $globalColor;
+    border-radius: 4px;
+    font-size: 10px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+}
+
+.dropdown:focus {
+    border-color: black;
+    outline: none;
 }
 </style>

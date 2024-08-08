@@ -2,17 +2,21 @@
 <div class="side">
     <h2 class="side-title">Menu</h2>
     <ul class="side-menu">
+        <li>
+            <router-link to="/">
+                <h3>Home</h3>
+            </router-link>
+        </li>
         <li v-if="hasPermission('role.read')">
             <router-link to="/role">Role</router-link>
         </li>
-        <li v-if="hasPermission('user.update')">
+        <li v-if="hasPermission('user.read')">
             <router-link to="/user">User</router-link>
         </li>
     </ul>
 </div>
 </template>
 
-  
 <script>
 export default {
     name: 'SidebarPage',
@@ -30,15 +34,14 @@ export default {
 };
 </script>
 
-  
 <style scoped>
 .side {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: red;
+    background-color: tomato;
     height: 100%;
-    width: 20vw;
+    width: auto;
 }
 
 .side-title {
