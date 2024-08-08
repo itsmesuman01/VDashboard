@@ -1,7 +1,7 @@
 <template>
 <div class="head-sub">
     <div class="space-sub">
-        <router-link class="button-link-scoped" :to="`/${title}-add/${0}`">
+        <router-link class="button-link-scoped" :to="`/${title}-add`">
             <h1>+</h1>
         </router-link>
     </div>

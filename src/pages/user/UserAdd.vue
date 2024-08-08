@@ -8,7 +8,7 @@
             <Header />
         </div>
         <div class="section">
-            <h1>{{(this.$route.params.id == 0) ? 'CREATE' : 'UPDATE'}} USER</h1>
+            <h1>{{(this.$route.query.id == null) ? 'CREATE' : 'UPDATE'}} USER</h1>
             <div class="register">
                 <form @submit.prevent="submitForm">
                     <input v-model="form.name" type="text" placeholder="Enter Name" required />
@@ -22,7 +22,7 @@
                     </select>
                     <br><br>
 
-                    <button type="submit" :disabled="loading">{{(this.$route.params.id == 0) ? 'CREATE' : 'UPDATE'}}</button>
+                    <button type="submit" :disabled="loading">{{(this.$route.query.id == null) ? 'CREATE' : 'UPDATE'}}</button>
                 </form>
             </div>
         </div>
@@ -73,10 +73,10 @@ export default {
     data() {
         return {
             form: {
-                name: '',
-                email: '',
+                name: this.$route.query.name,
+                email: this.$route.query.email,
                 password: '',
-                selectedRole: ''
+                selectedRole: (typeof this.$route.query.role === 'string') ? this.$route.query.role : ''
             },
             roles: [],
             loading: false,
@@ -95,7 +95,7 @@ export default {
 
             await axios.post(`${process.env.VUE_APP_API_URL}auth/user`, {
 
-                    id: (this.$route.params.id == 0) ? 0 : parseInt(this.$route.params.id),
+                    id: (this.$route.query.id == 0) ? 0 : parseInt(this.$route.query.id),
                     name: this.form.name,
                     email: this.form.email,
                     password: this.form.password,
