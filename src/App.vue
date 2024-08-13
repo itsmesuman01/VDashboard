@@ -58,7 +58,7 @@ export default {
 .section {
     background-color: white;
     flex: 1;
-    overflow: hidden;
+    overflow-y: scroll;
     padding: 0px 10px 0px 10px;
     border-top: 1px solid white;
     border-bottom: 1px solid white;
@@ -101,6 +101,14 @@ input {
     margin-left: auto;
     margin-right: auto;
     border: 1px solid $globalColor;
+}
+
+.input-file {
+    // FOR UPLOAD FILE INPUT FIELD
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ddd;
 }
 
 .button-link {

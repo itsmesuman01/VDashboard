@@ -8,9 +8,12 @@
             <Header />
         </div>
         <div class="section">
-            <h1>{{(this.$route.query.id == null) ? 'CREATE' : 'UPDATE'}} USER</h1>
+            <h1>{{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} USER</h1>
             <div class="register">
                 <form @submit.prevent="submitForm">
+                    <!-- Ensure form.image is used correctly -->
+                    <img :src="form.image ? `${envImageUrl}${form.image}` : defaultImageUrl" alt="User Image" class="user-image" />
+                    <input class="input-file" type="file" @change="uploadFile" required />
                     <input v-model="form.name" type="text" placeholder="Enter Name" required />
                     <input v-model="form.email" type="email" placeholder="Enter Email" required />
                     <input v-model="form.password" type="password" placeholder="Enter Password" required />
@@ -21,8 +24,7 @@
                         </option>
                     </select>
                     <br><br>
-
-                    <button type="submit" :disabled="loading">{{(this.$route.query.id == null) ? 'CREATE' : 'UPDATE'}}</button>
+                    <button type="submit" :disabled="loading">{{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }}</button>
                 </form>
             </div>
         </div>
@@ -33,10 +35,17 @@
 </div>
 </template>
 
+  
 <script>
-import { Header, Sidebar, Footer } from '../../components/layout';
-import axios from 'axios'
-import { fetchData } from '../../cacheService'
+import {
+    Header,
+    Sidebar,
+    Footer
+} from '../../components/layout';
+import axios from 'axios';
+import {
+    fetchData
+} from '../../cacheService';
 
 export default {
     name: 'UserAddPage',
@@ -49,7 +58,9 @@ export default {
         const token = localStorage.getItem('access_token');
 
         if (!token) {
-            this.$router.push({ name: 'Login' });
+            this.$router.push({
+                name: 'Login'
+            });
             return;
         }
 
@@ -62,7 +73,9 @@ export default {
                 },
             });
 
-            const { records } = response;
+            const {
+                records
+            } = response;
             this.roles = records;
         } catch (error) {
             console.warn(error);
@@ -73,6 +86,7 @@ export default {
     data() {
         return {
             form: {
+                image: this.$route.query.image,
                 name: this.$route.query.name,
                 email: this.$route.query.email,
                 password: '',
@@ -80,6 +94,8 @@ export default {
             },
             roles: [],
             loading: false,
+            envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
+            defaultImageUrl: require('@/assets/images/defaultimage.webp')
         };
     },
     methods: {
@@ -92,41 +108,53 @@ export default {
             this.loading = true;
 
             const token = localStorage.getItem('access_token');
+            const formData = new FormData();
 
-            await axios.post(`${process.env.VUE_APP_API_URL}auth/user`, {
+            const id = this.$route.query.id;
+            formData.append('id', id ? parseInt(id) : 0);
+            formData.append('name', this.form.name);
+            formData.append('email', this.form.email);
+            formData.append('password', this.form.password);
+            formData.append('role_id', this.form.selectedRole);
 
-                    id: (this.$route.query.id == 0) ? 0 : parseInt(this.$route.query.id),
-                    name: this.form.name,
-                    email: this.form.email,
-                    password: this.form.password,
-                    role_id: this.form.selectedRole
-                }, {
+            if (this.form.image) {
+                formData.append('image', this.form.image);
+            }
+
+            try {
+                const response = await axios.post(`${process.env.VUE_APP_API_URL}auth/user`, formData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     }
-                }, )
-                .then(response => {
-                    alert(response.data.message);
-                    this.$router.push({
-                        name: 'User'
-                    })
-                })
-                .catch(error => {
-                    console.warn(error);
-                    alert(error.response?.data?.errors?.password || 'An error occurred');
-                })
-
-                .finally(() => {
-                    this.loading = false;
                 });
+                alert(response.data.message);
+                this.$router.push({
+                    name: 'User'
+                });
+            } catch (error) {
+                console.warn(error);
+            } finally {
+                this.loading = false;
+            }
+        },
+        uploadFile(event) {
+            const file = event.target.files[0];
+            this.form.image = file;
         }
     }
 }
 </script>
 
+  
 <style scoped>
 h1 {
     color: tomato;
     margin: 50px 0px 50px 0px;
+}
+
+.user-image {
+    width: 298px;
+    height: 200px;
+    object-fit: cover;
 }
 </style>
