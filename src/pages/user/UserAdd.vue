@@ -11,9 +11,8 @@
             <h1>{{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} USER</h1>
             <div class="register">
                 <form @submit.prevent="submitForm">
-                    <!-- Ensure form.image is used correctly -->
-                    <img :src="form.image ? `${envImageUrl}${form.image}` : defaultImageUrl" alt="User Image" class="user-image" />
-                    <input class="input-file" type="file" @change="uploadFile" required />
+                    <img :src="imagePreview" alt="User Image" class="user-image" />
+                    <input class="input-file" type="file" @change="uploadFile" />
                     <input v-model="form.name" type="text" placeholder="Enter Name" required />
                     <input v-model="form.email" type="email" placeholder="Enter Email" required />
                     <input v-model="form.password" type="password" placeholder="Enter Password" required />
@@ -35,7 +34,6 @@
 </div>
 </template>
 
-  
 <script>
 import {
     Header,
@@ -58,9 +56,7 @@ export default {
         const token = localStorage.getItem('access_token');
 
         if (!token) {
-            this.$router.push({
-                name: 'Login'
-            });
+            this.$router.push({ name: 'Login' });
             return;
         }
 
@@ -73,9 +69,7 @@ export default {
                 },
             });
 
-            const {
-                records
-            } = response;
+            const { records } = response;
             this.roles = records;
         } catch (error) {
             console.warn(error);
@@ -86,16 +80,17 @@ export default {
     data() {
         return {
             form: {
-                image: this.$route.query.image,
-                name: this.$route.query.name,
-                email: this.$route.query.email,
+                image: this.$route.query.image || '',
+                name: this.$route.query.name || '',
+                email: this.$route.query.email || '',
                 password: '',
                 selectedRole: (typeof this.$route.query.role === 'string') ? this.$route.query.role : ''
             },
             roles: [],
             loading: false,
             envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
-            defaultImageUrl: require('@/assets/images/defaultimage.webp')
+            defaultImageUrl: require('@/assets/images/defaultimage.webp'),
+            imagePreview: this.$route.query.image ? `${process.env.VUE_APP_API_IMAGE_URL}${this.$route.query.image}` : require('@/assets/images/defaultimage.webp')
         };
     },
     methods: {
@@ -117,7 +112,8 @@ export default {
             formData.append('password', this.form.password);
             formData.append('role_id', this.form.selectedRole);
 
-            if (this.form.image) {
+            // Only append image if it has been selected
+            if (this.form.image instanceof File) {
                 formData.append('image', this.form.image);
             }
 
@@ -128,9 +124,7 @@ export default {
                     }
                 });
                 alert(response.data.message);
-                this.$router.push({
-                    name: 'User'
-                });
+                this.$router.push({ name: 'User' });
             } catch (error) {
                 console.warn(error);
             } finally {
@@ -140,12 +134,23 @@ export default {
         uploadFile(event) {
             const file = event.target.files[0];
             this.form.image = file;
+
+            // Create a FileReader to read the file and update imagePreview
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.imagePreview = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Reset imagePreview if no file is selected
+                this.imagePreview = this.defaultImageUrl;
+            }
         }
     }
 }
 </script>
 
-  
 <style scoped>
 h1 {
     color: tomato;

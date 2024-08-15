@@ -12,6 +12,7 @@
             <table v-if="hasPermission('user.read')">
                 <thead>
                     <tr>
+                        <th>S.No</th>
                         <th>Image</th>
                         <th>Name</th>
                         <th>Email</th>
@@ -20,7 +21,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in users" :key="item.id">
+                    <tr v-for="(item, index) in users" :key="item.id">
+                        <td class="index"> {{ index + 1 }}</td>
                         <td class="image-cell">
                             <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl" alt="User Image" class="user-image" />
                         </td>
@@ -158,5 +160,9 @@ td {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.index {
+    text-align: center;
 }
 </style>
