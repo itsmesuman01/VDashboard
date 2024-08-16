@@ -8,20 +8,18 @@
             <Header />
         </div>
         <div class="section">
-            <h1>{{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} USER</h1>
+            <h1>{{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} BANNER</h1>
             <div class="register">
                 <form @submit.prevent="submitForm">
-                    <img :src="imagePreview" alt="User Image" class="user-image" />
+                    <img :src="imagePreview" alt="Banner Image" class="banner-image" />
                     <input class="input-file" type="file" @change="uploadFile" />
                     <input v-model="form.name" type="text" placeholder="Enter Name" required />
-                    <input v-model="form.email" type="email" placeholder="Enter Email" required />
-                    <input v-model="form.password" type="password" placeholder="Enter Password" required />
-                    <select class="dropdown" v-model="form.selectedRole" required>
+                    <!-- <select class="dropdown" v-model="form.selectedRole" required>
                         <option disabled value="">Select Role</option>
                         <option v-for="item in roles" :key="item.id" :value="item.id">
                             {{ item.name }}
                         </option>
-                    </select>
+                    </select> -->
                     <br><br>
                     <button type="submit" :disabled="loading">{{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }}</button>
                 </form>
@@ -46,7 +44,7 @@ import {
 } from '../../cacheService';
 
 export default {
-    name: 'UserAddPage',
+    name: 'BannerAddPage',
     components: {
         Header,
         Sidebar,
@@ -69,8 +67,8 @@ export default {
                 },
             });
 
-            const { roles } = response;
-            this.roles = roles;
+            const { records } = response;
+            this.roles = records;
         } catch (error) {
             console.warn(error);
         } finally {
@@ -82,9 +80,9 @@ export default {
             form: {
                 image: this.$route.query.image || '',
                 name: this.$route.query.name || '',
-                email: this.$route.query.email || '',
-                password: '',
-                selectedRole: (typeof this.$route.query.role === 'string') ? this.$route.query.role : ''
+                // email: this.$route.query.email || '',
+                // password: '',
+                // selectedRole: (typeof this.$route.query.role === 'string') ? this.$route.query.role : ''
             },
             roles: [],
             loading: false,
@@ -95,7 +93,7 @@ export default {
     },
     methods: {
         async submitForm() {
-            if (!this.form.name || !this.form.email || !this.form.password) {
+            if (!this.form.name) {
                 alert('Please fill out all fields.');
                 return;
             }
@@ -108,9 +106,9 @@ export default {
             const id = this.$route.query.id;
             formData.append('id', id ? parseInt(id) : 0);
             formData.append('name', this.form.name);
-            formData.append('email', this.form.email);
-            formData.append('password', this.form.password);
-            formData.append('role_id', this.form.selectedRole);
+            // formData.append('email', this.form.email);
+            // formData.append('password', this.form.password);
+            // formData.append('role_id', this.form.selectedRole);
 
             // Only append image if it has been selected
             if (this.form.image instanceof File) {
@@ -118,13 +116,13 @@ export default {
             }
 
             try {
-                const response = await axios.post(`${process.env.VUE_APP_API_URL}auth/user`, formData, {
+                const response = await axios.post(`${process.env.VUE_APP_API_URL}auth/banner`, formData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     }
                 });
                 alert(response.data.message);
-                this.$router.push({ name: 'User' });
+                this.$router.push({ name: 'Banner' });
             } catch (error) {
                 console.warn(error);
             } finally {
@@ -157,7 +155,7 @@ h1 {
     margin: 50px 0px 50px 0px;
 }
 
-.user-image {
+.banner-image {
     width: 298px;
     height: 200px;
     object-fit: cover;

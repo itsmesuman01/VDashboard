@@ -8,16 +8,20 @@ const Main = {
         query: '',
         perPage: 10,
         page: 1,
+        loading: false,
         users: [],
-        loading: false
+        banners: []
     },
     mutations: {
-        SET_RESOURCE(state, users) {
-            state.users = users;
-        },
         SET_LOADING(state, loading) {
             state.loading = loading;
         },
+        SET_USER(state, users) {
+            state.users = users;
+        },
+        SET_BANNER(state, banners) {
+            state.banners = banners;
+        }
     },
     actions: {
         async fetchResource({ commit }, url) {
@@ -29,8 +33,9 @@ const Main = {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                const { records } = response
-                commit('SET_RESOURCE', records);
+                const { users, banners } = response
+                commit('SET_USER', users);
+                commit('SET_BANNER', banners);
             } catch (error) {
                 console.warn(error);
             } finally {

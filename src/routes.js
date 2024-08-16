@@ -1,4 +1,4 @@
-import {createWebHistory, createRouter} from 'vue-router'
+import { createWebHistory, createRouter } from 'vue-router'
 import Login from './pages/auth/Login.vue'
 import Register from './pages/auth/Register.vue'
 import VerifyOtp from './pages/auth/VerifyOtp.vue'
@@ -8,6 +8,8 @@ import Home from './pages/Home.vue'
 import Role from './pages/Role.vue'
 import User from './pages/user/User.vue'
 import UserAdd from './pages/user/UserAdd.vue'
+import Banner from './pages/banner/Banner.vue'
+import BannerAdd from './pages/banner/BannerAdd.vue'
 import PageNotFound from './components/PageNotFound.vue'
 
 const routes = [
@@ -50,6 +52,16 @@ const routes = [
         name: 'UserAdd',
         path: '/user-add',
         component: UserAdd
+    },
+    {
+        name: 'Banner',
+        path: '/banner',
+        component: Banner
+    },
+    {
+        name: 'BannerAdd',
+        path: '/banner-add',
+        component: BannerAdd
     },
     {
         name: 'Role',

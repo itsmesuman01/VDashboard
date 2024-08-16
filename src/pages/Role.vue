@@ -113,8 +113,8 @@ export default {
                 },
             });
 
-            const { records } = response;
-            this.roles = records;
+            const { roles } = response;
+            this.roles = roles;
         } catch (error) {
             console.warn(error);
         } finally {
@@ -137,8 +137,8 @@ export default {
                     },
                 });
 
-                this.allPermissions = response.data.records.allpermissions || [];
-                this.specificPermissions = response.data.records.specificpermissions || [];
+                this.allPermissions = response.data.roles.allpermissions || [];
+                this.specificPermissions = response.data.roles.specificpermissions || [];
 
                 this.permissionCategories = this.organizePermissions(
                     this.allPermissions,

@@ -13,6 +13,9 @@
         <li v-if="hasPermission('user.read')">
             <router-link to="/user">User</router-link>
         </li>
+        <li v-if="hasPermission('banner.read')">
+            <router-link to="/banner">Banner</router-link>
+        </li>
     </ul>
 </div>
 </template>
