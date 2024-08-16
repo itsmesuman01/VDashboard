@@ -52,9 +52,7 @@ import {
     Footer
 } from '../../components/layout';
 import axios from 'axios'
-import {
-    fetchData
-} from '../../cacheService'
+import { mapState } from 'vuex';
 
 export default {
     name: 'UserPage',
@@ -67,11 +65,18 @@ export default {
     data() {
         return {
             title: 'user',
-            users: [],
             loading: true,
             envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
             defaultImageUrl: require('@/assets/images/defaultimage.webp')
         };
+    },
+    computed: {
+        ...mapState({
+            query: state => state.main.query,
+            perPage: state => state.main.perPage,
+            page: state => state.main.page,
+            users: state => state.main.users,
+        }),
     },
     async mounted() {
         console.log(process.env.VUE_APP_API_IMAGE_URL)
@@ -84,19 +89,14 @@ export default {
             return;
         }
 
-        const apiUrl = `${process.env.VUE_APP_API_URL}auth/user`;
+        const query = this.query || ''
+        const perPage = this.perPage || 10
+        const page = this.page || 1
 
+        const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?query=${query}&perPage=${perPage}&page=${page}`;
         try {
-            const response = await fetchData(apiUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            await this.$store.dispatch('main/fetchResource', apiUrl);
 
-            const {
-                records
-            } = response;
-            this.users = records;
         } catch (error) {
             console.warn(error);
         } finally {
