@@ -36,6 +36,9 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="pagination">
+                <pagination v-model="page" :records="users.length" :per-page="limit" @paginate="myCallback" />
+            </div>
         </div>
         <div class="footer">
             <Footer />
@@ -52,7 +55,12 @@ import {
     Footer
 } from '../../components/layout';
 import axios from 'axios'
-import { mapState } from 'vuex';
+import {
+    mapState,
+    mapMutations,
+    mapGetters
+} from 'vuex';
+import Pagination from 'v-pagination-3';
 
 export default {
     name: 'UserPage',
@@ -61,22 +69,25 @@ export default {
         SubHeader,
         Sidebar,
         Footer,
+        Pagination
     },
     data() {
         return {
             title: 'user',
             loading: true,
             envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
-            defaultImageUrl: require('@/assets/images/defaultimage.webp')
+            defaultImageUrl: require('@/assets/images/defaultimage.webp'),
+            page: 1
         };
     },
     computed: {
         ...mapState({
             query: state => state.main.query,
-            perPage: state => state.main.perPage,
-            page: state => state.main.page,
+            skip: state => state.main.skip,
+            limit: state => state.main.limit,
             users: state => state.main.users,
         }),
+        ...mapGetters('main', ['getCache'])
     },
     async mounted() {
         console.log(process.env.VUE_APP_API_IMAGE_URL)
@@ -90,10 +101,10 @@ export default {
         }
 
         const query = this.query || ''
-        const perPage = this.perPage || 10
-        const page = this.page || 1
+        const skip = this.skip || 0
+        const limit = this.limit || 10
 
-        const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?query=${query}&perPage=${perPage}&page=${page}`;
+        const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?query=${query}&skip=${skip}&limit=${limit}`;
         try {
             await this.$store.dispatch('main/fetchResource', apiUrl);
 
@@ -104,6 +115,7 @@ export default {
         }
     },
     methods: {
+        ...mapMutations('main', ['CLEAR_CACHE']),
         hasPermission(permissionName) {
             return this.$hasPermission(permissionName);
         },
@@ -132,6 +144,20 @@ export default {
                 this.loading = false;
             }
         },
+        async myCallback() {
+            console.log('Cache data:', JSON.stringify(this.getCache, null, 2));
+            const skip = (this.page * this.limit) - this.limit
+            const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?query=${this.query}&skip=${skip}&limit=${this.limit}`;
+            try {
+                this.CLEAR_CACHE();
+                await this.$store.dispatch('main/fetchResource', apiUrl);
+
+            } catch (error) {
+                console.warn(error);
+            } finally {
+                this.loading = false;
+            }
+        }
     }
 };
 </script>
@@ -164,5 +190,10 @@ td {
 
 .index {
     text-align: center;
+}
+
+.pagination {
+    display: flex;
+    flex-direction: row;
 }
 </style>
