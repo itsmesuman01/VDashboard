@@ -37,7 +37,7 @@
                 </tbody>
             </table>
             <div class="pagination">
-                <pagination v-model="page" :records="users.length" :per-page="limit" @paginate="myCallback" />
+                <pagination v-model="page" :records="total" :per-page="limit" @paginate="myCallback" />
             </div>
         </div>
         <div class="footer">
@@ -82,10 +82,11 @@ export default {
     },
     computed: {
         ...mapState({
-            query: state => state.main.query,
+            find: state => state.main.find,
             skip: state => state.main.skip,
             limit: state => state.main.limit,
             users: state => state.main.users,
+            total: state => state.main.total,
         }),
         ...mapGetters('main', ['getCache'])
     },
@@ -100,11 +101,11 @@ export default {
             return;
         }
 
-        const query = this.query || ''
+        const find = this.find || ''
         const skip = this.skip || 0
         const limit = this.limit || 10
 
-        const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?query=${query}&skip=${skip}&limit=${limit}`;
+        const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?find=${find}&skip=${skip}&limit=${limit}`;
         try {
             await this.$store.dispatch('main/fetchResource', apiUrl);
 
@@ -147,7 +148,7 @@ export default {
         async myCallback() {
             console.log('Cache data:', JSON.stringify(this.getCache, null, 2));
             const skip = (this.page * this.limit) - this.limit
-            const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?query=${this.query}&skip=${skip}&limit=${this.limit}`;
+            const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?find=${this.find}&skip=${skip}&limit=${this.limit}`;
             try {
                 this.CLEAR_CACHE();
                 await this.$store.dispatch('main/fetchResource', apiUrl);

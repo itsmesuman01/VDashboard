@@ -26,7 +26,7 @@
                             <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl" alt="Banner Image" class="banner-image" />
                         </td>
                         <td>{{ item.name }}</td>
-                        <td>{{ item.is_active }}</td>
+                        <td>{{ item.is_active ? 'Active' : 'Inactive' }}</td>
                         <td>
                             <router-link class='button-link' :to="{ name: 'BannerAdd', query: { id: item.id, image: item.image, name: item.name, is_active: item.is_active } }">Edit</router-link>&nbsp;
                             <button :disabled="!hasPermission('banner.delete') || loading" v-on:click="deleteRecord(item.id)">Delete</button>
@@ -50,7 +50,9 @@ import {
     Footer
 } from '../../components/layout';
 import axios from 'axios'
-import { mapState } from 'vuex';
+import {
+    mapState
+} from 'vuex';
 
 export default {
     name: 'BannerPage',
@@ -70,7 +72,7 @@ export default {
     },
     computed: {
         ...mapState({
-            query: state => state.main.query,
+            find: state => state.main.find,
             perPage: state => state.main.perPage,
             page: state => state.main.page,
             banners: state => state.main.banners,
@@ -87,11 +89,11 @@ export default {
             return;
         }
 
-        const query = this.query || ''
+        const find = this.find || ''
         const perPage = this.perPage || 10
         const page = this.page || 1
 
-        const apiUrl = `${process.env.VUE_APP_API_URL}auth/banner?query=${query}&perPage=${perPage}&page=${page}`;
+        const apiUrl = `${process.env.VUE_APP_API_URL}auth/banner?find=${find}&perPage=${perPage}&page=${page}`;
         try {
             await this.$store.dispatch('main/fetchResource', apiUrl);
 

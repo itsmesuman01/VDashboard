@@ -4,12 +4,13 @@ const Main = {
   namespaced: true,
   state: {
     cache: {},
-    query: "",
+    find: "",
     skip: 0,
     limit: 10,
     loading: false,
     users: [],
     banners: [],
+    total: 0,
   },
   mutations: {
     CLEAR_CACHE() {
@@ -20,6 +21,9 @@ const Main = {
     },
     SET_LOADING(state, loading) {
       state.loading = loading;
+    },
+    SET_TOTAL(state, total) {
+      state.total = total;
     },
     SET_USER(state, users) {
       state.users = users;
@@ -41,7 +45,8 @@ const Main = {
             Authorization: `Bearer ${token}`,
           },
         });
-        const { users, banners } = response;
+        const { users, banners, total } = response;
+        commit("SET_TOTAL", total);
         commit("SET_USER", users);
         commit("SET_BANNER", banners);
       } catch (error) {
