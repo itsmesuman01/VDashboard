@@ -1,5 +1,6 @@
 <template>
 <div class="head">
+    <button @click="toggleSidebar" class="toggle">TOGGLE SIDEBAR</button>
     <div class="space">
         <router-link to="/home">HOME</router-link>
         <a @click.prevent="logout">LOGOUT</a>
@@ -10,10 +11,18 @@
 <script>
 export default {
     name: 'HeaderPage',
+    data() {
+        return {
+            isSidebarVisible: false
+        }
+    },
     methods: {
         logout() {
             ['access_token', 'permissions'].forEach(key => localStorage.removeItem(key));
             this.$router.push({ name: 'Login' });
+        },
+        toggleSidebar() {
+            this.$emit('hideSidebar');
         }
     }
 }
@@ -25,6 +34,7 @@ export default {
     align-items: center;
     background-color: #ff7000;
     height: 60px;
+    padding-left: 1rem;
 }
 
 .head a,
@@ -40,5 +50,11 @@ export default {
 
 .head .space {
     margin-left: auto;
+}
+
+@media (min-width: 710px) {
+    .toggle {
+        display: none;
+    }
 }
 </style>

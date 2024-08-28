@@ -5,7 +5,7 @@
     </div>
     <div class="maincontent">
         <div class="header">
-            <Header />
+            <Header @hideSidebar="hideSidebar" />
         </div>
         <div class="section">
             <h1>Hello, Welcome To Home Page</h1>
@@ -19,6 +19,7 @@
 
 <script>
 import { Header, Sidebar, Footer } from '../components/layout';
+
 export default {
     name: 'HomePage',
     components: {
@@ -26,5 +27,8 @@ export default {
         Sidebar,
         Footer,
     },
+    methods: {
+        hideSidebar() {}
+    }
 }
 </script>
