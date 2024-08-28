@@ -36,9 +36,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="pagination">
-                <pagination v-model="page" :records="total" :per-page="limit" @paginate="myCallback" />
-            </div>
+            <Pagination sendProp="user" />
         </div>
         <div class="footer">
             <Footer />
@@ -60,7 +58,7 @@ import {
     mapMutations,
     mapGetters
 } from 'vuex';
-import Pagination from 'v-pagination-3';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
     name: 'UserPage',
@@ -144,20 +142,6 @@ export default {
             } finally {
                 this.loading = false;
             }
-        },
-        async myCallback() {
-            console.log('Cache data:', JSON.stringify(this.getCache, null, 2));
-            const skip = (this.page * this.limit) - this.limit
-            const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?find=${this.find}&skip=${skip}&limit=${this.limit}`;
-            try {
-                this.CLEAR_CACHE();
-                await this.$store.dispatch('main/fetchResource', apiUrl);
-
-            } catch (error) {
-                console.warn(error);
-            } finally {
-                this.loading = false;
-            }
         }
     }
 };
@@ -191,10 +175,5 @@ td {
 
 .index {
     text-align: center;
-}
-
-.pagination {
-    display: flex;
-    flex-direction: row;
 }
 </style>

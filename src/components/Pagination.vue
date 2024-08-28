@@ -1,7 +1,5 @@
 <template>
-<div class="pagination">
-    <Pagination v-model="page" :records="total" :per-page="limit" @paginate="myCallback" />
-</div>
+<Pagination v-model="page" :records="total" :per-page="limit" @paginate="myCallback" />
 </template>
 
 <script>
@@ -12,6 +10,9 @@ export default {
     name: 'PaginationComponent',
     components: {
         Pagination,
+    },
+    props: {
+        sendProp: String,
     },
     data() {
         return {
@@ -28,17 +29,17 @@ export default {
         }),
     },
     methods: {
-        async myCallback() {
+        async myCallback(page) {
+            this.page = page;
             console.log('Page:', this.page);
             console.log('Limit:', this.limit);
             console.log('Total:', this.total);
 
             const skip = (this.page - 1) * this.limit;
-            const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?find=${this.find}&skip=${skip}&limit=${this.limit}`;
-            this.$store.commit('main/SET_SKIP', skip);
+            const apiUrl = `${process.env.VUE_APP_API_URL}auth/${this.sendProp}?find=${this.find}&skip=${skip}&limit=${this.limit}`;
             try {
                 this.loading = true;
-                this.$store.commit('CLEAR_CACHE');
+                this.$store.commit('main/CLEAR_CACHE');
                 await this.$store.dispatch('main/fetchResource', apiUrl);
             } catch (error) {
                 console.warn(error);
@@ -50,3 +51,18 @@ export default {
 
 }
 </script>
+
+<style>
+.VuePagination {
+    margin-top: 2rem !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.VuePagination li {
+    margin: 0 5px;
+    display: inline-block;
+}
+</style>
