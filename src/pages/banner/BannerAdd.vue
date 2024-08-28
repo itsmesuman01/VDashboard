@@ -79,10 +79,7 @@ export default {
         return {
             form: {
                 image: this.$route.query.image || '',
-                name: this.$route.query.name || '',
-                // email: this.$route.query.email || '',
-                // password: '',
-                // selectedRole: (typeof this.$route.query.role === 'string') ? this.$route.query.role : ''
+                name: this.$route.query.name || ''
             },
             roles: [],
             loading: false,
