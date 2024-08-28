@@ -9,33 +9,35 @@
         </div>
         <SubHeader :title='title' />
         <div class="section">
-            <table v-if="hasPermission('user.read')">
-                <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(item, index) in users" :key="item.id">
-                        <td class="index"> {{ index + 1 }}</td>
-                        <td class="image-cell">
-                            <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl" alt="User Image" class="user-image" />
-                        </td>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.email }}</td>
-                        <td>{{ item.roles.name }}</td>
-                        <td>
-                            <router-link class='button-link' :to="{ name: 'UserAdd', query: { id: item.id, image: item.image, name: item.name, password: item.password, email: item.email, role: item.roles.name } }">Edit</router-link>&nbsp;
-                            <button :disabled="!hasPermission('user.delete') || loading" v-on:click="deleteRecord(item.id)">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table v-if="hasPermission('user.read')">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in users" :key="item.id">
+                            <td class="index"> {{ index + 1 }}</td>
+                            <td class="image-cell">
+                                <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl" alt="User Image" class="user-image" />
+                            </td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.email }}</td>
+                            <td>{{ item.roles.name }}</td>
+                            <td>
+                                <router-link class='button-link' :to="{ name: 'UserAdd', query: { id: item.id, image: item.image, name: item.name, password: item.password, email: item.email, role: item.roles.name } }">Edit</router-link>&nbsp;
+                                <button :disabled="!hasPermission('user.delete') || loading" v-on:click="deleteRecord(item.id)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <Pagination sendProp="user" />
         </div>
         <div class="footer">
@@ -148,10 +150,16 @@ export default {
 </script>
 
 <style scoped>
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -15px;
+}
+
 table {
-    margin: 0px 0;
     width: 100%;
     border-collapse: collapse;
+    min-width: 600px;
 }
 
 th,
@@ -175,5 +183,24 @@ td {
 
 .index {
     text-align: center;
+}
+
+@media (max-width: 600px) {
+
+    th,
+    td {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .image-cell {
+        width: 50px;
+        height: 50px;
+    }
+
+    .user-image {
+        width: 100%;
+        height: 100%;
+    }
 }
 </style>
