@@ -22,3 +22,4 @@ pnpm-debug.log*
 *.sln
 *.sw?
 /src/assets/logo.png
+backend_server.bat
