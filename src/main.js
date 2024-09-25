@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './routes';
-import { mountTo, hasPermission } from './helpers';
+import { mountTo, hasPermission, showToast } from './helpers';
 import store from "./store";
 
 const app = createApp(App);
@@ -9,5 +9,6 @@ const app = createApp(App);
 app.use(store);
 app.config.globalProperties.$mountTo = mountTo;
 app.config.globalProperties.$hasPermission = hasPermission;
+app.config.globalProperties.$showToast = showToast;
 
 app.use(router).mount('#app');

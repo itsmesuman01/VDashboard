@@ -1,50 +1,54 @@
 <template>
-<div class="container">
-    <div class="sidebar">
-        <Sidebar />
-    </div>
-    <div class="maincontent">
-        <div class="header">
-            <Header />
+    <div class="container">
+        <div class="sidebar">
+            <Sidebar />
         </div>
-        <SubHeader :title='title' />
-        <div class="section">
-            <div class="table-container">
-                <table v-if="hasPermission('user.read')">
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, index) in users" :key="item.id">
-                            <td class="index"> {{ index + 1 }}</td>
-                            <td class="image-cell">
-                                <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl" alt="User Image" class="user-image" />
-                            </td>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.email }}</td>
-                            <td>{{ item.roles.name }}</td>
-                            <td>
-                                <router-link class='button-link' :to="{ name: 'UserAdd', query: { id: item.id, image: item.image, name: item.name, password: item.password, email: item.email, role: item.roles.name } }">Edit</router-link>&nbsp;
-                                <button :disabled="!hasPermission('user.delete') || loading" v-on:click="deleteRecord(item.id)">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="maincontent">
+            <div class="header">
+                <Header />
             </div>
-            <Pagination sendProp="user" />
-        </div>
-        <div class="footer">
-            <Footer />
+            <SubHeader :title='title' />
+            <div class="section">
+                <div id="toastbar"></div>
+                <div class="table-container">
+                    <table v-if="hasPermission('user.read')">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in users" :key="item.id">
+                                <td class="index"> {{ index + 1 }}</td>
+                                <td class="image-cell">
+                                    <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl"
+                                        alt="User Image" class="user-image" />
+                                </td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.email }}</td>
+                                <td>{{ item.roles.name }}</td>
+                                <td>
+                                    <router-link class='button-link'
+                                        :to="{ name: 'UserAdd', query: { id: item.id, image: item.image, name: item.name, password: item.password, email: item.email, role: item.roles.name } }">Edit</router-link>&nbsp;
+                                    <button :disabled="!hasPermission('user.delete') || loading"
+                                        v-on:click="deleteRecord(item.id)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <Pagination sendProp="user" />
+            </div>
+            <div class="footer">
+                <Footer />
+            </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -139,6 +143,7 @@ export default {
                 });
 
                 this.users = this.users.filter(user => user.id !== id);
+                return this.$showToast('Failed to submit');
             } catch (error) {
                 console.warn(error);
             } finally {
