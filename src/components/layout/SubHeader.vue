@@ -1,11 +1,12 @@
 <template>
-<div class="head-sub">
-    <div class="space-sub">
-        <router-link class="button-link-scoped" :to="`/${title}-add`">
-            <h1>+</h1>
-        </router-link>
+    <div class="head-sub">
+        <div class="space-sub">
+            <router-link class="button-link-scoped" :to="`/${title}-add`">
+                <h1>+</h1>
+            </router-link>
+            <div id="toastbar"></div>
+        </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -28,6 +29,7 @@ h1 {
     display: flex;
     align-items: center;
     height: auto;
+    overflow: hidden;
 }
 
 .head-sub .space-sub {
@@ -35,7 +37,7 @@ h1 {
 }
 
 .head-sub .space-sub .button-link-scoped {
-    background-color: orange;
+    background-color: #006aff;
     border: 0px solid white;
     width: 50px;
     border-radius: 10px;

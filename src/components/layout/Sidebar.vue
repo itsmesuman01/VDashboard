@@ -1,23 +1,23 @@
 <template>
-<div class="side">
-    <h2 class="side-title">Menu</h2>
-    <ul class="side-menu">
-        <li>
-            <router-link to="/">
-                <h3>Home</h3>
-            </router-link>
-        </li>
-        <li v-if="hasPermission('role.read')">
-            <router-link to="/role">Role</router-link>
-        </li>
-        <li v-if="hasPermission('user.read')">
-            <router-link to="/user">User</router-link>
-        </li>
-        <li v-if="hasPermission('banner.read')">
-            <router-link to="/banner">Banner</router-link>
-        </li>
-    </ul>
-</div>
+    <div class="side">
+        <h2 class="side-title">Menu</h2>
+        <ul class="side-menu">
+            <li>
+                <router-link to="/">
+                    <h3>Home</h3>
+                </router-link>
+            </li>
+            <li v-if="hasPermission('role.read')">
+                <router-link to="/role">Role</router-link>
+            </li>
+            <li v-if="hasPermission('user.read')">
+                <router-link to="/user">User</router-link>
+            </li>
+            <li v-if="hasPermission('banner.read')">
+                <router-link to="/banner">Banner</router-link>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
@@ -42,7 +42,7 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: tomato;
+    background-color: #4b90f1;
     height: 100%;
     width: auto;
 }

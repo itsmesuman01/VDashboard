@@ -1,7 +1,7 @@
 <template>
-<footer>
-    © DESIGN AND DEVELOP BY SUMAN PANDEY
-</footer>
+    <footer>
+        © DESIGN AND DEVELOP BY SUMAN PANDEY
+    </footer>
 </template>
 
 <script>
@@ -12,7 +12,7 @@ export default {
 
 <style scoped>
 footer {
-    background-color: #fca25c;
+    background-color: #4788e3;
     color: white;
     padding: 10px;
     text-align: center;

@@ -34,7 +34,7 @@
 }
 
 .maincontent {
-  background-color: #ffd9ad;
+  background-color: white;
   height: 100%;
   flex: 1;
   display: flex;
@@ -43,7 +43,7 @@
 }
 
 .header {
-  background-color: orange;
+  background-color: #006aff;
   height: 60px;
   overflow: hidden;
 }
@@ -72,7 +72,7 @@
 }
 
 h1 {
-  color: #e0530d;
+  color: #006aff;
 }
 
 button {
@@ -93,7 +93,7 @@ input {
   margin-bottom: 30px;
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid #e0530d;
+  border: 1px solid #006aff;
 }
 
 .input-file {
@@ -139,16 +139,12 @@ th,
 td {
   padding: 6px;
   border-bottom: 1px solid #ddd;
-  border: 1px solid orange;
+  border: 1px solid #006aff;
   text-align: center;
 }
 
 thead {
-  background-color: #f4f4f4;
-}
-
-th {
-  background-color: orange;
+  background-color: #006aff;
   color: #fff;
 }
 
@@ -160,7 +156,7 @@ tr:hover {
   width: 300px;
   height: 40px;
   padding: 10px;
-  border: 1px solid #e0530d;
+  border: 1px solid #006aff;
   border-radius: 4px;
   font-size: 10px;
   background-color: #fff;
@@ -182,22 +178,23 @@ tr:hover {
 /* TOAST */
 #toastbar {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0px;
+  right: 2px;
   display: flex;
   align-items: flex-end;
   flex-direction: column;
   overflow: hidden;
-  padding: 20px;
+  box-shadow: 0 0 20px #006aff;
+  border: 1px solid #006aff;
+  /* padding: 20px; */
 }
 
 .toast {
   width: 400px;
-  height: 80px;
+  height: 58px;
   background: #fff;
   font-weight: 500;
-  margin: 15px 0;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  margin: 0px 0;
   display: flex;
   align-items: center;
   transition: opacity 0.5s;
@@ -220,7 +217,7 @@ tr:hover {
 }
 
 .toast::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: 0;
@@ -251,7 +248,6 @@ tr:hover {
 .close-button:hover {
   color: red;
 }
-
 
 @keyframes anim {
   100% {

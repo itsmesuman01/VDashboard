@@ -1,11 +1,11 @@
 <template>
-<div class="head">
-    <button @click="toggleSidebar" class="toggle">TOGGLE SIDEBAR</button>
-    <div class="space">
-        <router-link to="/home">HOME</router-link>
-        <a @click.prevent="logout">LOGOUT</a>
+    <div class="head">
+        <button @click="toggleSidebar" class="toggle">TOGGLE SIDEBAR</button>
+        <div class="space">
+            <router-link to="/home">HOME</router-link>
+            <a @click.prevent="logout">LOGOUT</a>
+        </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -32,7 +32,7 @@ export default {
 .head {
     display: flex;
     align-items: center;
-    background-color: #ff7000;
+    background-color: #006aff;
     height: 60px;
     padding-left: 1rem;
 }

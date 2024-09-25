@@ -9,7 +9,6 @@
             </div>
             <SubHeader :title='title' />
             <div class="section">
-                <div id="toastbar"></div>
                 <div class="table-container">
                     <table v-if="hasPermission('user.read')">
                         <thead>
@@ -143,7 +142,7 @@ export default {
                 });
 
                 this.users = this.users.filter(user => user.id !== id);
-                return this.$showToast('Failed to submit');
+                return this.$showToast('PASS', 'Successfully Deleted');
             } catch (error) {
                 console.warn(error);
             } finally {
