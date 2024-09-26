@@ -1,12 +1,20 @@
 <template>
-<img class="logo" src="../../assets/logo.png" alt="Logo" />
-<h1>VERIFY EMAIL</h1>
-<div class="verify">
-    <form @submit.prevent="submitForm">
-        <input v-model="form.email" type="email" placeholder="Enter Email" required />
-        <button type="submit" :disabled="loading">SEND</button>
-    </form>
-</div>
+    <div class="flex items-center justify-center h-screen bg-gray-100">
+        <div class="bg-white rounded-lg shadow-lg p-8 w-96">
+            <img class="mx-auto mb-6" src="../../assets/logo.png" alt="Logo" />
+            <h1 class="text-2xl font-semibold text-center mb-6">VERIFY EMAIL</h1>
+            <div class="verify">
+                <form @submit.prevent="submitForm">
+                    <input v-model="form.email" type="email" placeholder="Enter Email" required
+                        class="block w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500" />
+                    <button type="submit" :disabled="loading"
+                        class="w-full p-3 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition duration-200">
+                        SEND
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -35,16 +43,16 @@ export default {
             this.loading = true;
 
             await axios.post(`${process.env.VUE_APP_API_URL}verifyemail`, {
-                    email: this.form.email,
-                })
+                email: this.form.email,
+            })
                 .then(response => {
                     alert(response.data.message);
                     this.$router.push({
                         name: 'VerifyOtp'
-                    })
+                    });
                 })
                 .catch(error => {
-                    console.warn(error)
+                    console.warn(error);
                     alert(error.response.data.message);
                 })
                 .finally(() => {
