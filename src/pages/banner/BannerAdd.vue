@@ -1,35 +1,35 @@
 <template>
-<div class="container">
-    <div class="sidebar">
-        <Sidebar />
-    </div>
-    <div class="maincontent">
-        <div class="header">
-            <Header />
+    <div class="container">
+        <div class="sidebar">
+            <Sidebar />
         </div>
-        <div class="section">
-            <h1>{{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} BANNER</h1>
-            <div class="register">
-                <form @submit.prevent="submitForm">
-                    <img :src="imagePreview" alt="Banner Image" class="banner-image" />
-                    <input class="input-file" type="file" @change="uploadFile" />
-                    <input v-model="form.name" type="text" placeholder="Enter Name" required />
-                    <!-- <select class="dropdown" v-model="form.selectedRole" required>
-                        <option disabled value="">Select Role</option>
-                        <option v-for="item in roles" :key="item.id" :value="item.id">
-                            {{ item.name }}
-                        </option>
-                    </select> -->
-                    <br><br>
-                    <button type="submit" :disabled="loading">{{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }}</button>
-                </form>
+        <div class="maincontent flex-1 p-8 bg-gray-50">
+            <div class="header mb-4">
+                <Header />
+            </div>
+            <div class="section bg-white rounded-lg shadow-md p-6">
+                <h1 class="text-2xl font-bold text-center text-tomato mb-6">
+                    {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} BANNER
+                </h1>
+                <div class="register flex flex-col items-center">
+                    <img :src="imagePreview" alt="Banner Image" class="banner-image mb-4 rounded" />
+                    <form @submit.prevent="submitForm" class="w-full max-w-md">
+                        <input class="block w-full p-2 mb-4 border border-gray-300 rounded" type="file"
+                            @change="uploadFile" />
+                        <input v-model="form.name" type="text" placeholder="Enter Name" required
+                            class="block w-full p-2 mb-4 border border-gray-300 rounded" />
+                        <button type="submit" :disabled="loading"
+                            class="w-full p-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition">
+                            {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer mt-4">
+                <Footer />
             </div>
         </div>
-        <div class="footer">
-            <Footer />
-        </div>
     </div>
-</div>
 </template>
 
 <script>
