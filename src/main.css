@@ -23,7 +23,7 @@
 }
 
 /* LAYOUT CSS */
-.container {
+.containerapp {
   display: flex;
   height: 100vh;
 }
@@ -78,9 +78,8 @@ h1 {
 button {
   width: 100px;
   height: 40px;
-  border: 1px solid rgb(226, 57, 57);
   color: white;
-  background-color: rgb(226, 57, 57);
+  background-color: rgb(151, 49, 49);
   cursor: pointer;
   border-radius: 50px;
 }
@@ -110,9 +109,8 @@ input {
   height: 40px;
   line-height: 38px;
   text-align: center;
-  border: 1px solid #04aa6d;
   color: white;
-  background-color: #04aa6d;
+  background-color: rgb(55, 80, 160);
   text-decoration: none;
   cursor: pointer;
   border-radius: 50px;

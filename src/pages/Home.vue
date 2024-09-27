@@ -1,20 +1,20 @@
 <template>
-<div class="container">
-    <div class="sidebar">
-        <Sidebar />
+    <div class="containerapp">
+        <div class="sidebar">
+            <Sidebar />
+        </div>
+        <div class="maincontent">
+            <div class="header">
+                <Header @hideSidebar="hideSidebar" />
+            </div>
+            <div class="section">
+                <h1>Hello, Welcome To Home Page</h1>
+            </div>
+            <div class="footer">
+                <Footer />
+            </div>
+        </div>
     </div>
-    <div class="maincontent">
-        <div class="header">
-            <Header @hideSidebar="hideSidebar" />
-        </div>
-        <div class="section">
-            <h1>Hello, Welcome To Home Page</h1>
-        </div>
-        <div class="footer">
-            <Footer />
-        </div>
-    </div>
-</div>
 </template>
 
 <script>
@@ -28,7 +28,7 @@ export default {
         Footer,
     },
     methods: {
-        hideSidebar() {}
+        hideSidebar() { }
     }
 }
 </script>

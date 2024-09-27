@@ -1,76 +1,81 @@
 <template>
-<div class="container">
-    <div class="sidebar">
-        <Sidebar />
-    </div>
-    <div class="maincontent">
-        <div class="header">
-            <Header />
+    <div class="containerapp">
+        <div class="sidebar">
+            <Sidebar />
         </div>
-        <div class="section">
-            <div v-if="showrole === 0">
-                <table v-if="hasPermission('role.read')">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in roles" :key="item.id">
-                            <td>{{ item.id }}</td>
-                            <td>{{ item.name }}</td>
-                            <td>
-                                <button :disabled="!hasPermission('role.update') || loading" @click="editRecord(item.id)">
-                                    Edit
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="maincontent">
+            <div class="header">
+                <Header />
             </div>
-            <div v-else>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Create</th>
-                            <th>Read</th>
-                            <th>Update</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(permType, index) in permissionCategories" :key="index">
-                            <td>{{ index + 1 }}</td>
-                            <td>{{ permType.name }}</td>
-                            <td>
-                                <input type="checkbox" :checked="permType.create" @change="updatePermission(permType.name, 'create', $event)" />
-                            </td>
-                            <td>
-                                <input type="checkbox" :checked="permType.read" @change="updatePermission(permType.name, 'read', $event)" />
-                            </td>
-                            <td>
-                                <input type="checkbox" :checked="permType.update" @change="updatePermission(permType.name, 'update', $event)" />
-                            </td>
-                            <td>
-                                <input type="checkbox" :checked="permType.delete" @change="updatePermission(permType.name, 'delete', $event)" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button @click="submitPermissions(currentRoleId)" :disabled="loading">
-                    Save
-                </button>
+            <div class="section">
+                <div v-if="showrole === 0">
+                    <table v-if="hasPermission('role.read')">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in roles" :key="item.id">
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.name }}</td>
+                                <td>
+                                    <button :disabled="!hasPermission('role.update') || loading"
+                                        @click="editRecord(item.id)">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div v-else>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Create</th>
+                                <th>Read</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(permType, index) in permissionCategories" :key="index">
+                                <td>{{ index + 1 }}</td>
+                                <td>{{ permType.name }}</td>
+                                <td>
+                                    <input type="checkbox" :checked="permType.create"
+                                        @change="updatePermission(permType.name, 'create', $event)" />
+                                </td>
+                                <td>
+                                    <input type="checkbox" :checked="permType.read"
+                                        @change="updatePermission(permType.name, 'read', $event)" />
+                                </td>
+                                <td>
+                                    <input type="checkbox" :checked="permType.update"
+                                        @change="updatePermission(permType.name, 'update', $event)" />
+                                </td>
+                                <td>
+                                    <input type="checkbox" :checked="permType.delete"
+                                        @change="updatePermission(permType.name, 'delete', $event)" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button @click="submitPermissions(currentRoleId)" :disabled="loading">
+                        Save
+                    </button>
+                </div>
+            </div>
+            <div class="footer">
+                <Footer />
             </div>
         </div>
-        <div class="footer">
-            <Footer />
-        </div>
     </div>
-</div>
 </template>
 
 <script>

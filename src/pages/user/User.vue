@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="containerapp">
         <div class="sidebar">
             <Sidebar />
         </div>
