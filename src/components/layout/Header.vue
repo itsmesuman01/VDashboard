@@ -1,6 +1,6 @@
 <template>
     <div class="head">
-        <button @click="toggleSidebar" class="toggle">TOGGLE SIDEBAR</button>
+        <button v-if="isToggleVisible" @click="toggleSidebar" class="toggle">TOGGLE SIDEBAR</button>
         <div class="space">
             <router-link to="/home">HOME</router-link>
             <a @click.prevent="logout">LOGOUT</a>
@@ -9,27 +9,39 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 export default {
     name: 'HeaderPage',
     data() {
         return {
-            isSidebarVisible: false
-        }
+            isToggleVisible: false
+        };
     },
     computed: {
-        ...mapMutations('main', ['TOGGLE_SIDEBAR'])
+        ...mapState('main', {
+            isSidebarVisible: state => state.isSidebarVisible
+        }),
+    },
+    mounted() {
+        window.addEventListener('resize', this.updateToggleVisibility);
+        this.updateToggleVisibility();
+    },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.updateToggleVisibility);
     },
     methods: {
+        updateToggleVisibility() {
+            this.isToggleVisible = window.innerWidth < 710;
+        },
         logout() {
             ['access_token', 'permissions'].forEach(key => localStorage.removeItem(key));
             this.$router.push({ name: 'Login' });
         },
         toggleSidebar() {
-            this.TOGGLE_SIDEBAR();
+            this.$store.commit('main/TOGGLE_SIDEBAR');
         }
-    }
-}
+    },
+};
 </script>
 
 <style scoped>
@@ -54,11 +66,5 @@ export default {
 
 .head .space {
     margin-left: auto;
-}
-
-@media (min-width: 710px) {
-    .toggle {
-        display: none;
-    }
 }
 </style>

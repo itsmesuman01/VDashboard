@@ -24,28 +24,16 @@
 import { mapState } from 'vuex'
 export default {
     name: 'SidebarPage',
-    data() {
-        return {
-            permission: [],
-            permissionNames: [],
-            isSidebarVisible: true,
-        };
+    computed: {
+        ...mapState('main', {
+            isSidebarVisible: state => state.isSidebarVisible,
+        }),
     },
     methods: {
         hasPermission(permissionName) {
             return this.$hasPermission(permissionName);
-        },
-        toggleSidebar() {
-            alert('asdsa')
-            this.isSidebarVisible = !this.isSidebarVisible;
         }
-    },
-    computed: {
-        ...mapState({
-            toggleSidebar: state => state.main.toggle_sidebar,
-        })
-    },
-
+    }
 };
 </script>
 

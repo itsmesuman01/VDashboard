@@ -5,7 +5,7 @@
         </div>
         <div class="maincontent">
             <div class="header">
-                <Header @hideSidebar="hideSidebar" />
+                <Header />
             </div>
             <div class="section">
                 <h1>Hello, Welcome To Home Page</h1>
@@ -26,9 +26,6 @@ export default {
         Header,
         Sidebar,
         Footer,
-    },
-    methods: {
-        hideSidebar() { }
     }
 }
 </script>

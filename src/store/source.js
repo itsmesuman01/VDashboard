@@ -11,7 +11,7 @@ const Main = {
     users: [],
     banners: [],
     total: 0,
-    toggle_sidebar: 0
+    isSidebarVisible: true,
   },
   mutations: {
     CLEAR_CACHE() {
@@ -33,7 +33,7 @@ const Main = {
       state.banners = banners;
     },
     TOGGLE_SIDEBAR(state) {
-      state.toggle_sidebar = 1;
+      state.isSidebarVisible = !state.isSidebarVisible;
     },
   },
   getters: {
