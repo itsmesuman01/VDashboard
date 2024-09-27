@@ -92,8 +92,8 @@ export default {
             roles: [],
             loading: false,
             envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
-            defaultImageUrl: require('@/assets/images/defaultimage.webp'),
-            imagePreview: this.$route.query.image ? `${process.env.VUE_APP_API_IMAGE_URL}${this.$route.query.image}` : require('@/assets/images/defaultimage.webp'),
+            defaultImageUrl: require('@/assets/images/defaultimage.png'),
+            imagePreview: this.$route.query.image ? `${process.env.VUE_APP_API_IMAGE_URL}${this.$route.query.image}` : require('@/assets/images/defaultimage.png'),
             isEdit: !!this.$route.query.id
         };
     },
