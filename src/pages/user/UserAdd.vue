@@ -3,7 +3,7 @@
         <div class="sidebar">
             <Sidebar />
         </div>
-        <div class="maincontent flex-1 p-8 bg-gray-50">
+        <div class="maincontent flex-1 bg-gray-50">
             <div class="header mb-4">
                 <Header />
             </div>
@@ -12,7 +12,7 @@
                     {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} USER
                 </h1>
                 <div class="register flex flex-col items-center">
-                    <img :src="imagePreview" alt="User Image" class="user-image mb-4 rounded" />
+                    <img :src="imagePreview" alt="User Image" class="w-[450px] h-[200px] object-cover mb-4 rounded" />
                     <form @submit.prevent="submitForm" class="w-full max-w-md">
                         <input class="block w-full p-2 mb-4 border border-gray-300 rounded" type="file"
                             @change="uploadFile" />
@@ -154,11 +154,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.user-image {
-    width: 298px;
-    height: 200px;
-    object-fit: cover;
-}
-</style>

@@ -3,7 +3,7 @@
         <div class="sidebar">
             <Sidebar />
         </div>
-        <div class="maincontent flex-1 p-8 bg-gray-50">
+        <div class="maincontent flex-1 bg-gray-50">
             <div class="header mb-4">
                 <Header />
             </div>
@@ -12,7 +12,7 @@
                     {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} BANNER
                 </h1>
                 <div class="register flex flex-col items-center">
-                    <img :src="imagePreview" alt="Banner Image" class="banner-image mb-4 rounded" />
+                    <img :src="imagePreview" alt="Banner Image" class="w-[450px] h-[200px] object-cover mb-4 rounded" />
                     <form @submit.prevent="submitForm" class="w-full max-w-md">
                         <input class="block w-full p-2 mb-4 border border-gray-300 rounded" type="file"
                             @change="uploadFile" />
@@ -156,11 +156,5 @@ export default {
 h1 {
     color: tomato;
     margin: 50px 0px 50px 0px;
-}
-
-.banner-image {
-    width: 298px;
-    height: 200px;
-    object-fit: cover;
 }
 </style>
