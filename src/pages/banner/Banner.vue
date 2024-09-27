@@ -9,34 +9,36 @@
             </div>
             <SubHeader :title='title' />
             <div class="section">
-                <table v-if="hasPermission('banner.read')">
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, index) in banners" :key="item.id">
-                            <td class="index"> {{ index + 1 }}</td>
-                            <td class="image-cell">
-                                <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl"
-                                    alt="Banner Image" class="banner-image" />
-                            </td>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.is_active ? 'Active' : 'Inactive' }}</td>
-                            <td>
-                                <router-link class='button-link'
-                                    :to="{ name: 'BannerAdd', query: { id: item.id, image: item.image, name: item.name, is_active: item.is_active } }">Edit</router-link>&nbsp;
-                                <button :disabled="!hasPermission('banner.delete') || loading"
-                                    v-on:click="deleteRecord(item.id)">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-container">
+                    <table v-if="hasPermission('banner.read')">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in banners" :key="item.id">
+                                <td class="index"> {{ index + 1 }}</td>
+                                <td class="image-cell">
+                                    <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl"
+                                        alt="Banner Image" class="banner-image" />
+                                </td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.is_active ? 'Active' : 'Inactive' }}</td>
+                                <td>
+                                    <router-link class='button-link'
+                                        :to="{ name: 'BannerAdd', query: { id: item.id, image: item.image, name: item.name, is_active: item.is_active } }">Edit</router-link>&nbsp;
+                                    <button :disabled="!hasPermission('banner.delete') || loading"
+                                        v-on:click="deleteRecord(item.id)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <Pagination sendProp="banner" />
             </div>
             <div class="footer">
@@ -143,6 +145,12 @@ export default {
 </script>
 
 <style scoped>
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    /* margin: 0 -15px; */
+}
+
 table {
     margin: 0px 0;
     width: 100%;
@@ -170,5 +178,24 @@ td {
 
 .index {
     text-align: center;
+}
+
+@media (max-width: 600px) {
+
+    th,
+    td {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .image-cell {
+        width: 50px;
+        height: 50px;
+    }
+
+    .banner-image {
+        width: 100%;
+        height: 100%;
+    }
 }
 </style>

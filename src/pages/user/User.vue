@@ -161,9 +161,9 @@ export default {
 }
 
 table {
+    margin: 0px 0;
     width: 100%;
     border-collapse: collapse;
-    min-width: 600px;
 }
 
 th,
