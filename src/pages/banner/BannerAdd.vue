@@ -18,6 +18,12 @@
                             @change="uploadFile" />
                         <input v-model="form.name" type="text" placeholder="Enter Name" required
                             class="block w-full p-2 mb-4 border border-gray-300 rounded" />
+                        <select v-model="form.is_active"
+                            class="block w-full p-2 mb-4 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
+                            <option value="" disabled v-if="!isEdit">Select</option>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
                         <button type="submit" :disabled="loading"
                             class="w-full p-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition">
                             {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }}
@@ -79,13 +85,15 @@ export default {
         return {
             form: {
                 image: this.$route.query.image || '',
-                name: this.$route.query.name || ''
+                name: this.$route.query.name || '',
+                is_active: this.$route.query.is_active || ''
             },
             roles: [],
             loading: false,
             envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
             defaultImageUrl: require('@/assets/images/defaultimage.webp'),
-            imagePreview: this.$route.query.image ? `${process.env.VUE_APP_API_IMAGE_URL}${this.$route.query.image}` : require('@/assets/images/defaultimage.webp')
+            imagePreview: this.$route.query.image ? `${process.env.VUE_APP_API_IMAGE_URL}${this.$route.query.image}` : require('@/assets/images/defaultimage.webp'),
+            isEdit: !!this.$route.query.id
         };
     },
     methods: {

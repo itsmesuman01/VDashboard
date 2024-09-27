@@ -157,7 +157,7 @@ export default {
 .table-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    margin: 0 -15px;
+    /* margin: 0 -15px; */
 }
 
 table {
