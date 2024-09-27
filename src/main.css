@@ -146,9 +146,9 @@ thead {
   color: #fff;
 }
 
-tr:hover {
+/* tr:hover {
   background-color: white;
-}
+} */
 
 .dropdown {
   width: 300px;

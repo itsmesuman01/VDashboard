@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
     name: 'HeaderPage',
     data() {
@@ -16,13 +17,16 @@ export default {
             isSidebarVisible: false
         }
     },
+    computed: {
+        ...mapMutations('main', ['TOGGLE_SIDEBAR'])
+    },
     methods: {
         logout() {
             ['access_token', 'permissions'].forEach(key => localStorage.removeItem(key));
             this.$router.push({ name: 'Login' });
         },
         toggleSidebar() {
-            this.$emit('hideSidebar');
+            this.TOGGLE_SIDEBAR();
         }
     }
 }

@@ -11,6 +11,7 @@ const Main = {
     users: [],
     banners: [],
     total: 0,
+    toggle_sidebar: 0
   },
   mutations: {
     CLEAR_CACHE() {
@@ -30,6 +31,9 @@ const Main = {
     },
     SET_BANNER(state, banners) {
       state.banners = banners;
+    },
+    TOGGLE_SIDEBAR(state) {
+      state.toggle_sidebar = 1;
     },
   },
   getters: {

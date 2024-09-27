@@ -1,5 +1,5 @@
 <template>
-    <div class="side">
+    <div v-show="isSidebarVisible" class="side">
         <h2 class="side-title">Menu</h2>
         <ul class="side-menu">
             <li>
@@ -21,19 +21,31 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     name: 'SidebarPage',
     data() {
         return {
             permission: [],
             permissionNames: [],
+            isSidebarVisible: true,
         };
     },
     methods: {
         hasPermission(permissionName) {
             return this.$hasPermission(permissionName);
+        },
+        toggleSidebar() {
+            alert('asdsa')
+            this.isSidebarVisible = !this.isSidebarVisible;
         }
-    }
+    },
+    computed: {
+        ...mapState({
+            toggleSidebar: state => state.main.toggle_sidebar,
+        })
+    },
+
 };
 </script>
 
@@ -45,6 +57,7 @@ export default {
     background-color: #4b90f1;
     height: 100%;
     width: auto;
+    transition: all 0.3s ease;
 }
 
 .side-title {
