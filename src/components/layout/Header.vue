@@ -1,6 +1,6 @@
 <template>
     <div class="head">
-        <button v-if="isToggleVisible" @click="toggleSidebar" class="toggle">TOGGLE SIDEBAR</button>
+        <button v-if="isToggleVisible" @click="toggleSidebar" class="toggle">TOGGLE</button>
         <div class="space">
             <router-link to="/home">HOME</router-link>
             <a @click.prevent="logout">LOGOUT</a>
@@ -14,6 +14,7 @@ export default {
     name: 'HeaderPage',
     data() {
         return {
+            windowWidth: window.innerWidth,
             isToggleVisible: false
         };
     },
@@ -23,15 +24,18 @@ export default {
         }),
     },
     mounted() {
-        window.addEventListener('resize', this.updateToggleVisibility);
+        window.addEventListener('resize', this.updateWindowWidth);
         this.updateToggleVisibility();
     },
     beforeUnmount() {
-        window.removeEventListener('resize', this.updateToggleVisibility);
+        window.removeEventListener('resize', this.updateWindowWidth);
     },
     methods: {
+        updateWindowWidth() {
+            this.windowWidth = window.innerWidth;
+        },
         updateToggleVisibility() {
-            this.isToggleVisible = window.innerWidth < 710;
+            this.isToggleVisible = this.windowWidth < 710;
         },
         logout() {
             ['access_token', 'permissions'].forEach(key => localStorage.removeItem(key));
@@ -40,6 +44,15 @@ export default {
         toggleSidebar() {
             this.$store.commit('main/TOGGLE_SIDEBAR');
         }
+    },
+    watch: {
+        windowWidth: 'updateToggleVisibility',
+        // watch: {
+        //     windowWidth: function () {
+        //         this.updateToggleVisibility();
+        //         this.updateSidebarVisibility();
+        //     },
+        // },
     },
 };
 </script>
