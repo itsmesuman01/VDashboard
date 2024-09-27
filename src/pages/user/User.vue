@@ -33,7 +33,7 @@
                                 <td>{{ item.roles.name }}</td>
                                 <td>
                                     <router-link class='button-link'
-                                        :to="{ name: 'UserAdd', query: { id: item.id, image: item.image, name: item.name, password: item.password, email: item.email, role: item.roles.name } }">Edit</router-link>&nbsp;
+                                        :to="{ name: 'UserAdd', query: { id: item.id, image: item.image, name: item.name, password: item.password, email: item.email, role: item.roles.id } }">Edit</router-link>&nbsp;
                                     <button :disabled="!hasPermission('user.delete') || loading"
                                         v-on:click="deleteRecord(item.id)">Delete</button>
                                 </td>

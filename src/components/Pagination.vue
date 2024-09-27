@@ -1,5 +1,5 @@
 <template>
-<Pagination v-model="page" :records="total" :per-page="limit" @paginate="myCallback" />
+    <Pagination v-model="page" :records="total" :per-page="limit" @paginate="myCallback" />
 </template>
 
 <script>
@@ -64,5 +64,9 @@ export default {
 .VuePagination li {
     margin: 0 5px;
     display: inline-block;
+}
+
+.VuePagination button {
+    background-color: #4b90f1;
 }
 </style>

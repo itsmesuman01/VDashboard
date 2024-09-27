@@ -111,9 +111,7 @@ export default {
             const id = this.$route.query.id;
             formData.append('id', id ? parseInt(id) : 0);
             formData.append('name', this.form.name);
-            // formData.append('email', this.form.email);
-            // formData.append('password', this.form.password);
-            // formData.append('role_id', this.form.selectedRole);
+            formData.append('is_active', this.form.is_active || 0);
 
             // Only append image if it has been selected
             if (this.form.image instanceof File) {

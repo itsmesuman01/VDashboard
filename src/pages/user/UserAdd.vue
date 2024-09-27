@@ -20,11 +20,11 @@
                             class="block w-full p-2 mb-4 border border-gray-300 rounded" />
                         <input v-model="form.email" type="email" placeholder="Enter Email" required
                             class="block w-full p-2 mb-4 border border-gray-300 rounded" />
-                        <input v-model="form.password" type="password" placeholder="Enter Password" required
-                            class="block w-full p-2 mb-4 border border-gray-300 rounded" />
+                        <input v-if="!isEdit" v-model="form.password" type="password" placeholder="Enter Password"
+                            required class="block w-full p-2 mb-4 border border-gray-300 rounded" />
                         <select v-model="form.selectedRole" required
-                            class="block w-full p-2 mb-4 border border-gray-300 rounded">
-                            <option disabled value="">Select Role</option>
+                            class="block w-full p-2 mb-4 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
+                            <option disabled value="" v-if="!isEdit">Select Role</option>
                             <option v-for="item in roles" :key="item.id" :value="item.id">
                                 {{ item.name }}
                             </option>
@@ -87,18 +87,19 @@ export default {
                 name: this.$route.query.name || '',
                 email: this.$route.query.email || '',
                 password: '',
-                selectedRole: (typeof this.$route.query.role === 'string') ? this.$route.query.role : ''
+                selectedRole: this.$route.query.role || ''
             },
             roles: [],
             loading: false,
             envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
             defaultImageUrl: require('@/assets/images/defaultimage.webp'),
-            imagePreview: this.$route.query.image ? `${process.env.VUE_APP_API_IMAGE_URL}${this.$route.query.image}` : require('@/assets/images/defaultimage.webp')
+            imagePreview: this.$route.query.image ? `${process.env.VUE_APP_API_IMAGE_URL}${this.$route.query.image}` : require('@/assets/images/defaultimage.webp'),
+            isEdit: !!this.$route.query.id
         };
     },
     methods: {
         async submitForm() {
-            if (!this.form.name || !this.form.email || !this.form.password) {
+            if (!this.form.name || !this.form.email || (!this.isEdit) ? !this.form.password : '') {
                 alert('Please fill out all fields.');
                 return;
             }
@@ -112,7 +113,7 @@ export default {
             formData.append('id', id ? parseInt(id) : 0);
             formData.append('name', this.form.name);
             formData.append('email', this.form.email);
-            formData.append('password', this.form.password);
+            (!this.isEdit) ? formData.append('password', this.form.password) : '';
             formData.append('role_id', this.form.selectedRole);
 
             // Only append image if it has been selected
