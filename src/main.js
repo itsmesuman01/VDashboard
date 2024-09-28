@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './routes';
 import { mountTo, hasPermission, showToast } from './helpers';
 import store from "./store";
+import '@fortawesome/fontawesome-free/css/all.css';
 
 const app = createApp(App);
 

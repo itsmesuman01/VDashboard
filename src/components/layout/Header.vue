@@ -1,6 +1,8 @@
 <template>
     <div class="head">
-        <button v-if="isToggleVisible" @click="toggleSidebar" class="toggle">TOGGLE</button>
+        <i v-if="isToggleVisible" @click="toggleSidebar"
+            class="fas fa-bars text-blue-900 hover:text-blue-700 transition duration-200 cursor-pointer p-2 rounded-lg hover:bg-blue-100"
+            aria-label="Toggle sidebar"></i>
         <div class="space">
             <router-link to="/home">HOME</router-link>
             <a @click.prevent="logout">LOGOUT</a>
