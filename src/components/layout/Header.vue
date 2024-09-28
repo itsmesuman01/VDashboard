@@ -9,13 +9,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
+
 export default {
     name: 'HeaderPage',
     data() {
         return {
             windowWidth: window.innerWidth,
-            isToggleVisible: false
+            isToggleVisible: false,
+            check: 0
         };
     },
     computed: {
@@ -33,9 +35,18 @@ export default {
     methods: {
         updateWindowWidth() {
             this.windowWidth = window.innerWidth;
+            this.updateToggleVisibility();
         },
         updateToggleVisibility() {
             this.isToggleVisible = this.windowWidth < 710;
+
+            if (this.windowWidth >= 710 && this.check === 1) {
+                this.check = 0;
+                this.toggleSidebar();
+            } else if (this.isToggleVisible && this.check === 0) {
+                this.check = 1;
+                this.toggleSidebar();
+            }
         },
         logout() {
             ['access_token', 'permissions'].forEach(key => localStorage.removeItem(key));
@@ -47,12 +58,6 @@ export default {
     },
     watch: {
         windowWidth: 'updateToggleVisibility',
-        // watch: {
-        //     windowWidth: function () {
-        //         this.updateToggleVisibility();
-        //         this.updateSidebarVisibility();
-        //     },
-        // },
     },
 };
 </script>

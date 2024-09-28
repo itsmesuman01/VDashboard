@@ -1,8 +1,6 @@
 <template>
     <div class="containerapp">
-        <div class="sidebar">
-            <Sidebar />
-        </div>
+        <Sidebar />
         <div class="maincontent">
             <div class="header">
                 <Header />

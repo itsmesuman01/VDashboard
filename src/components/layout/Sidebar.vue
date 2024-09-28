@@ -44,7 +44,7 @@ export default {
     padding: 20px;
     background-color: #4b90f1;
     height: 100%;
-    width: auto;
+    width: 15vw;
     transition: all 0.3s ease;
 }
 
