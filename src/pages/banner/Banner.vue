@@ -20,7 +20,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="(item, index) in banners" :key="item.id">
-                                <td class="index-cell"> {{ index + 1 }}</td>
+                                <td class="text-center"> {{ index + 1 }}</td>
                                 <td class="image-cell">
                                     <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl"
                                         alt="Banner Image" class="image-cell-td" />

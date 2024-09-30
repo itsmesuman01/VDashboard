@@ -59,7 +59,7 @@ export default {
 }
 
 .side-menu a:hover {
-    background-color: #575757;
+    background-color: rgb(255, 0, 0);
 }
 
 @media screen and (max-width: 710px) {
