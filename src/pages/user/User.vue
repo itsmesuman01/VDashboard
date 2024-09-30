@@ -5,7 +5,7 @@
             <div class="header">
                 <Header />
             </div>
-            <SubHeader :title='title' />
+            <SubHeader :title="title" @search="updateSearch" />
             <div class="section">
                 <div class="table-container">
                     <table v-if="hasPermission('user.read')">
@@ -21,7 +21,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="(item, index) in users" :key="item.id">
-                                <td class="text-center"> {{ index + 1 }}</td>
+                                <td class="text-center">{{ index + 1 }}</td>
                                 <td class="image-cell">
                                     <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl"
                                         alt="User Image" class="image-cell-td" />
@@ -31,9 +31,11 @@
                                 <td>{{ item.roles.name }}</td>
                                 <td>
                                     <router-link class='button-link'
-                                        :to="{ name: 'UserAdd', query: { id: item.id, image: item.image, name: item.name, password: item.password, email: item.email, role: item.roles.id } }">Edit</router-link>&nbsp;
+                                        :to="{ name: 'UserAdd', query: { id: item.id, image: item.image, name: item.name, password: item.password, email: item.email, role: item.roles.id } }">Edit
+                                    </router-link>&nbsp;
                                     <button :disabled="!hasPermission('user.delete') || loading"
-                                        v-on:click="deleteRecord(item.id)">Delete</button>
+                                        v-on:click="deleteRecord(item.id)">Delete
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -78,7 +80,8 @@ export default {
             loading: true,
             envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
             defaultImageUrl: require('@/assets/images/defaultimage.webp'),
-            page: 1
+            page: 1,
+            searchValue: ''
         };
     },
     computed: {
@@ -89,37 +92,43 @@ export default {
             users: state => state.main.users,
             total: state => state.main.total,
         }),
-        ...mapGetters('main', ['getCache'])
+        ...mapGetters('main', ['getCache']),
+        // filteredUsers() {
+        //     return this.users.filter(user => user.name.toLowerCase().includes(this.searchValue.toLowerCase()));
+        // }
     },
     async mounted() {
-        console.log(process.env.VUE_APP_API_IMAGE_URL)
-        const token = localStorage.getItem('access_token');
-
-        if (!token) {
-            this.$router.push({
-                name: 'Login'
-            });
-            return;
-        }
-
-        const find = this.find || ''
-        const skip = this.skip || 0
-        const limit = this.limit || 10
-
-        const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?find=${find}&skip=${skip}&limit=${limit}`;
-        try {
-            await this.$store.dispatch('main/fetchResource', apiUrl);
-
-        } catch (error) {
-            console.warn(error);
-        } finally {
-            this.loading = false;
-        }
+        this.fetchUsers();
     },
     methods: {
         ...mapMutations('main', ['CLEAR_CACHE']),
         hasPermission(permissionName) {
             return this.$hasPermission(permissionName);
+        },
+        async fetchUsers() {
+            const token = localStorage.getItem('access_token');
+
+            if (!token) {
+                this.$router.push({ name: 'Login' });
+                return;
+            }
+
+            const find = this.searchValue || '';
+            const skip = this.skip || 0;
+            const limit = this.limit || 10;
+
+            const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?find=${find}&skip=${skip}&limit=${limit}`;
+            try {
+                await this.$store.dispatch('main/fetchResource', apiUrl);
+            } catch (error) {
+                console.warn(error);
+            } finally {
+                this.loading = false;
+            }
+        },
+        updateSearch(value) {
+            this.searchValue = value;
+            this.fetchUsers();
         },
         async deleteRecord(id) {
             if (!confirm('Are you sure you want to delete this record?')) {
@@ -134,9 +143,7 @@ export default {
                         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                         'Content-Type': 'application/json'
                     },
-                    data: {
-                        id: id
-                    }
+                    data: { id: id }
                 });
 
                 this.users = this.users.filter(user => user.id !== id);

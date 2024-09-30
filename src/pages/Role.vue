@@ -45,7 +45,7 @@
                             <tbody>
                                 <tr v-for="(permType, index) in permissionCategories" :key="index">
                                     <td class="text-center">{{ index + 1 }}</td>
-                                    <td>{{ permType.name }}</td>
+                                    <td>{{ $toCamelCase(permType.name) }}</td>
                                     <td>
                                         <input type="checkbox" :checked="permType.create"
                                             @change="updatePermission(permType.name, 'create', $event)" />

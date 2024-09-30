@@ -5,7 +5,7 @@
             <div class="header">
                 <Header />
             </div>
-            <SubHeader :title='title' />
+            <SubHeader :title="title" @search="updateSearch" />
             <div class="section">
                 <div class="table-container">
                     <table v-if="hasPermission('banner.read')">
@@ -20,7 +20,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="(item, index) in banners" :key="item.id">
-                                <td class="text-center"> {{ index + 1 }}</td>
+                                <td class="text-center">{{ index + 1 }}</td>
                                 <td class="image-cell">
                                     <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl"
                                         alt="Banner Image" class="image-cell-td" />
@@ -53,7 +53,7 @@ import {
     Sidebar,
     Footer
 } from '../../components/layout';
-import axios from 'axios'
+import axios from 'axios';
 import {
     mapState
 } from 'vuex';
@@ -73,45 +73,53 @@ export default {
             title: 'banner',
             loading: true,
             envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
-            defaultImageUrl: require('@/assets/images/defaultimage.webp')
+            defaultImageUrl: require('@/assets/images/defaultimage.webp'),
+            searchValue: ''
         };
     },
     computed: {
         ...mapState({
-            find: state => state.main.find,
             perPage: state => state.main.perPage,
             page: state => state.main.page,
             banners: state => state.main.banners,
         }),
+        // filteredBanners() {
+        //     return this.banners.filter(banner =>
+        //         banner.name.toLowerCase().includes(this.searchValue.toLowerCase())
+        //     );
+        // }
     },
     async mounted() {
-        console.log(process.env.VUE_APP_API_IMAGE_URL)
-        const token = localStorage.getItem('access_token');
-
-        if (!token) {
-            this.$router.push({
-                name: 'Login'
-            });
-            return;
-        }
-
-        const find = this.find || ''
-        const perPage = this.perPage || 10
-        const page = this.page || 1
-
-        const apiUrl = `${process.env.VUE_APP_API_URL}auth/banner?find=${find}&perPage=${perPage}&page=${page}`;
-        try {
-            await this.$store.dispatch('main/fetchResource', apiUrl);
-
-        } catch (error) {
-            console.warn(error);
-        } finally {
-            this.loading = false;
-        }
+        await this.fetchBanners();
     },
     methods: {
         hasPermission(permissionName) {
             return this.$hasPermission(permissionName);
+        },
+        async fetchBanners() {
+            const token = localStorage.getItem('access_token');
+
+            if (!token) {
+                this.$router.push({ name: 'Login' });
+                return;
+            }
+
+            const find = this.searchValue || '';
+            const perPage = this.perPage || 10;
+            const page = this.page || 1;
+
+            const apiUrl = `${process.env.VUE_APP_API_URL}auth/banner?find=${find}&perPage=${perPage}&page=${page}`;
+            try {
+                await this.$store.dispatch('main/fetchResource', apiUrl);
+            } catch (error) {
+                console.warn(error);
+            } finally {
+                this.loading = false;
+            }
+        },
+        updateSearch(value) {
+            this.searchValue = value;
+            this.fetchBanners();
         },
         async deleteRecord(id) {
             if (!confirm('Are you sure you want to delete this record?')) {
@@ -126,18 +134,17 @@ export default {
                         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                         'Content-Type': 'application/json'
                     },
-                    data: {
-                        id: id
-                    }
+                    data: { id }
                 });
 
                 this.banners = this.banners.filter(banner => banner.id !== id);
+                return this.$showToast('PASS', 'Successfully Deleted');
             } catch (error) {
                 console.warn(error);
             } finally {
                 this.loading = false;
             }
-        },
+        }
     }
 };
 </script>
