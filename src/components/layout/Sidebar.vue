@@ -1,10 +1,12 @@
 <template>
-    <div v-show="isSidebarVisible" class="side">
-        <h2 class="side-title">Menu</h2>
+    <div v-show="isSidebarVisible"
+        class="flex flex-col p-5 bg-[#4b90f1] h-full w-[15vw] transition-all duration-300 ease-in-out">
+        <h2 class="text-[#fff] text-[24px] mb-[20px]">Menu</h2>
+
         <ul class="side-menu">
             <li>
                 <router-link to="/">
-                    <h3>Home</h3>
+                    Home
                 </router-link>
             </li>
             <li v-if="hasPermission('role.read')">
@@ -38,22 +40,6 @@ export default {
 </script>
 
 <style scoped>
-.side {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    background-color: #4b90f1;
-    height: 100%;
-    width: 15vw;
-    transition: all 0.3s ease;
-}
-
-.side-title {
-    color: #fff;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
 .side-menu {
     list-style-type: none;
     padding: 0;
@@ -74,5 +60,11 @@ export default {
 
 .side-menu a:hover {
     background-color: #575757;
+}
+
+@media screen and (max-width: 710px) {
+    .side {
+        width: 45vw;
+    }
 }
 </style>

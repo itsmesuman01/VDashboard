@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <footer class="bg-[#4788e3] text-white p-[10px] text-center text-[14px] w-full h-[40px]">
         © DESIGN AND DEVELOP BY SUMAN PANDEY
     </footer>
 </template>
@@ -9,16 +9,3 @@ export default {
     name: 'FooterPage'
 }
 </script>
-
-<style scoped>
-footer {
-    background-color: #4788e3;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    align-items: center;
-    font-size: 14px;
-    width: 100%;
-    height: 40px;
-}
-</style>

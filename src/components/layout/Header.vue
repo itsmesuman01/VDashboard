@@ -1,9 +1,9 @@
 <template>
-    <div class="head">
+    <div class="head flex items-center bg-[#006aff] h-[60px] pl-[1rem]">
         <i v-if="isToggleVisible" @click="toggleSidebar"
             class="fas fa-bars text-blue-900 hover:text-blue-700 transition duration-200 cursor-pointer p-2 rounded-lg hover:bg-blue-100"
             aria-label="Toggle sidebar"></i>
-        <div class="space">
+        <div class="ml-auto">
             <router-link to="/home">HOME</router-link>
             <a @click.prevent="logout">LOGOUT</a>
         </div>
@@ -65,14 +65,6 @@ export default {
 </script>
 
 <style scoped>
-.head {
-    display: flex;
-    align-items: center;
-    background-color: #006aff;
-    height: 60px;
-    padding-left: 1rem;
-}
-
 .head a,
 .head router-link {
     color: #f2f2f2;
@@ -82,9 +74,5 @@ export default {
     font-size: 16px;
     margin-right: 4px;
     font-family: Avenir, Helvetica, Arial, sans-serif;
-}
-
-.head .space {
-    margin-left: auto;
 }
 </style>
