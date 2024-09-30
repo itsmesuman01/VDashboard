@@ -10,7 +10,6 @@
                 <h1 class="text-white">+</h1>
             </router-link>
         </div>
-        <div id="toastbar"></div>
     </div>
 </template>
 

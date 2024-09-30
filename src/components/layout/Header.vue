@@ -8,6 +8,7 @@
             <a @click.prevent="logout">LOGOUT</a>
         </div>
     </div>
+    <div id="toastbar"></div>
 </template>
 
 <script>

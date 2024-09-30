@@ -5,28 +5,31 @@
             <div class="header mb-4">
                 <Header />
             </div>
-            <div class="section bg-white rounded-lg shadow-md p-6">
-                <h1 class="text-2xl font-bold text-center mb-6">
-                    {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} BANNER
-                </h1>
-                <div class="register flex flex-col items-center">
-                    <img :src="imagePreview" alt="Banner Image" class="w-[450px] h-[200px] object-cover mb-4 rounded" />
-                    <form @submit.prevent="submitForm" class="w-full max-w-md">
-                        <input class="block w-full p-2 mb-4 border border-gray-300 rounded" type="file"
-                            @change="uploadFile" />
-                        <input v-model="form.name" type="text" placeholder="Enter Name" required
-                            class="block w-full p-2 mb-4 border border-gray-300 rounded" />
-                        <select v-model="form.is_active"
-                            class="block w-full p-2 mb-4 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
-                            <option value="" disabled v-if="!isEdit">Select</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                        <button type="submit" :disabled="loading"
-                            class="w-full p-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition">
-                            {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }}
-                        </button>
-                    </form>
+            <div class="section flex justify-center items-center bg-white rounded-lg shadow-md p-6">
+                <div class="w-[900px] border-[10px] border-blue-400 rounded-[100px] p-10">
+                    <h1 class="text-2xl font-bold text-center mb-6">
+                        {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} BANNER
+                    </h1>
+                    <div class="register flex flex-col items-center">
+                        <img :src="imagePreview" alt="Banner Image"
+                            class="w-[450px] h-[200px] object-cover mb-4 rounded" />
+                        <form @submit.prevent="submitForm" class="w-full max-w-md">
+                            <input class="block w-full h-auto p-2 mb-4 border border-gray-300 rounded" type="file"
+                                @change="uploadFile" />
+                            <input v-model="form.name" type="text" placeholder="Enter Name" required
+                                class="block w-full p-2 mb-4 border border-gray-300 rounded" />
+                            <select v-model="form.is_active"
+                                class="block w-full p-2 mb-4 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
+                                <option value="" disabled v-if="!isEdit">Select</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                            <button type="submit" :disabled="loading"
+                                class="w-full p-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition">
+                                {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }}
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="footer mt-4">
@@ -122,8 +125,8 @@ export default {
                         Authorization: `Bearer ${token}`,
                     }
                 });
-                alert(response.data.message);
-                this.$router.push({ name: 'Banner' });
+                this.$showToast('PASS', response.data.message);
+                setTimeout(() => this.$router.push({ name: 'Banner' }), 3000);
             } catch (error) {
                 console.warn(error);
             } finally {

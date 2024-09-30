@@ -49,12 +49,9 @@
 }
 
 .section {
-  background-color: white;
   flex: 1;
   overflow-y: scroll;
   padding-right: 10px;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
 }
 
 .footer {

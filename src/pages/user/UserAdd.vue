@@ -5,33 +5,36 @@
             <div class="header mb-4">
                 <Header />
             </div>
-            <div class="section bg-white rounded-lg shadow-md p-6">
-                <h1 class="text-2xl font-bold text-center mb-6">
-                    {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} USER
-                </h1>
-                <div class="register flex flex-col items-center">
-                    <img :src="imagePreview" alt="User Image" class="w-[450px] h-[200px] object-cover mb-4 rounded" />
-                    <form @submit.prevent="submitForm" class="w-full max-w-md">
-                        <input class="block w-full p-2 mb-4 border border-gray-300 rounded" type="file"
-                            @change="uploadFile" />
-                        <input v-model="form.name" type="text" placeholder="Enter Name" required
-                            class="block w-full p-2 mb-4 border border-gray-300 rounded" />
-                        <input v-model="form.email" type="email" placeholder="Enter Email" required
-                            class="block w-full p-2 mb-4 border border-gray-300 rounded" />
-                        <input v-if="!isEdit" v-model="form.password" type="password" placeholder="Enter Password"
-                            required class="block w-full p-2 mb-4 border border-gray-300 rounded" />
-                        <select v-model="form.selectedRole" required
-                            class="block w-full p-2 mb-4 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
-                            <option disabled value="" v-if="!isEdit">Select Role</option>
-                            <option v-for="item in roles" :key="item.id" :value="item.id">
-                                {{ item.name }}
-                            </option>
-                        </select>
-                        <button type="submit" :disabled="loading"
-                            class="w-full p-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition">
-                            {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }}
-                        </button>
-                    </form>
+            <div class="section flex justify-center items-center bg-white rounded-lg shadow-md p-6">
+                <div class="w-[900px] border-[10px] border-blue-400 rounded-[100px] p-10">
+                    <h1 class="text-2xl font-bold text-center mb-6">
+                        {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} USER
+                    </h1>
+                    <div class="register flex flex-col items-center">
+                        <img :src="imagePreview" alt="User Image"
+                            class="w-[450px] h-[200px] object-cover mb-4 rounded" />
+                        <form @submit.prevent="submitForm" class="w-full max-w-md">
+                            <input class="block w-full h-auto p-2 mb-4 border border-gray-300 rounded" type="file"
+                                @change="uploadFile" />
+                            <input v-model="form.name" type="text" placeholder="Enter Name" required
+                                class="block w-full p-2 mb-4 border border-gray-300 rounded" />
+                            <input v-model="form.email" type="email" placeholder="Enter Email" required
+                                class="block w-full p-2 mb-4 border border-gray-300 rounded" />
+                            <input v-if="!isEdit" v-model="form.password" type="password" placeholder="Enter Password"
+                                required class="block w-full p-2 mb-4 border border-gray-300 rounded" />
+                            <select v-model="form.selectedRole" required
+                                class="block w-full p-2 mb-4 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
+                                <option disabled value="" v-if="!isEdit">Select Role</option>
+                                <option v-for="item in roles" :key="item.id" :value="item.id">
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                            <button type="submit" :disabled="loading"
+                                class="w-full p-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition">
+                                {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }}
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="footer mt-4">
