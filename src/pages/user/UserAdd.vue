@@ -6,7 +6,7 @@
                 <Header />
             </div>
             <div class="section bg-white rounded-lg shadow-md p-6">
-                <h1 class="text-2xl font-bold text-center text-tomato mb-6">
+                <h1 class="text-2xl font-bold text-center mb-6">
                     {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} USER
                 </h1>
                 <div class="register flex flex-col items-center">

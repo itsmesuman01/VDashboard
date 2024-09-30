@@ -20,10 +20,10 @@
                         </thead>
                         <tbody>
                             <tr v-for="(item, index) in banners" :key="item.id">
-                                <td class="index"> {{ index + 1 }}</td>
+                                <td class="index-cell"> {{ index + 1 }}</td>
                                 <td class="image-cell">
                                     <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl"
-                                        alt="Banner Image" class="banner-image" />
+                                        alt="Banner Image" class="image-cell-td" />
                                 </td>
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.is_active ? 'Active' : 'Inactive' }}</td>
@@ -141,59 +141,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-.table-container {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    /* margin: 0 -15px; */
-}
-
-table {
-    margin: 0px 0;
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th,
-td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-.image-cell {
-    width: 75px;
-    height: 75px;
-    overflow: hidden;
-}
-
-.banner-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.index {
-    text-align: center;
-}
-
-@media (max-width: 600px) {
-
-    th,
-    td {
-        font-size: 12px;
-        padding: 6px;
-    }
-
-    .image-cell {
-        width: 50px;
-        height: 50px;
-    }
-
-    .banner-image {
-        width: 100%;
-        height: 100%;
-    }
-}
-</style>

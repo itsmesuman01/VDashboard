@@ -125,20 +125,44 @@ input {
   background-color: black;
 }
 
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  /* margin: 0 -15px; */
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
+  margin: 0px 0;
   font-size: 16px;
   text-align: left;
 }
 
 th,
 td {
-  padding: 6px;
-  border-bottom: 1px solid #ddd;
-  border: 1px solid #006aff;
-  text-align: center;
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.image-cell {
+  width: 75px;
+  height: 75px;
+  overflow: hidden;
+}
+
+.image-cell-td{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 600px) {
+  .image-cell-td {
+      width: 100%;
+      height: 100%;
+  }
 }
 
 thead {
