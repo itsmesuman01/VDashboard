@@ -5,7 +5,7 @@
             <div class="header">
                 <Header />
             </div>
-            <SubHeader :title="title" @search="updateSearch" />
+            <SubHeader :title="title" @search="updateSearch" @paginate="updatePaginate" />
             <div class="section">
                 <div class="table-container">
                     <table v-if="hasPermission('user.read')">
@@ -60,7 +60,6 @@ import {
 import axios from 'axios'
 import {
     mapState,
-    mapMutations,
     mapGetters
 } from 'vuex';
 import Pagination from '@/components/Pagination.vue';
@@ -80,9 +79,16 @@ export default {
             loading: true,
             envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
             defaultImageUrl: require('@/assets/images/defaultimage.webp'),
-            page: 1,
             searchValue: ''
         };
+    },
+    watch: {
+        skip(newVal) {
+            console.log(`Skip changed to: ${newVal}`);
+        },
+        limit(newVal) {
+            console.log(`Limit changed to: ${newVal}`);
+        }
     },
     computed: {
         ...mapState({
@@ -101,7 +107,6 @@ export default {
         this.fetchUsers();
     },
     methods: {
-        ...mapMutations('main', ['CLEAR_CACHE']),
         hasPermission(permissionName) {
             return this.$hasPermission(permissionName);
         },
@@ -128,6 +133,10 @@ export default {
         },
         updateSearch(value) {
             this.searchValue = value;
+            this.fetchUsers();
+        },
+        updatePaginate(value) {
+            this.$store.commit('main/SET_SKIP', value);
             this.fetchUsers();
         },
         async deleteRecord(id) {

@@ -5,7 +5,7 @@
             <div class="header">
                 <Header />
             </div>
-            <SubHeader :title="title" @search="updateSearch" />
+            <SubHeader :title="title" @search="updateSearch" @paginate="updatePaginate" />
             <div class="section">
                 <div class="table-container">
                     <table v-if="hasPermission('banner.read')">
@@ -77,11 +77,21 @@ export default {
             searchValue: ''
         };
     },
+    watch: {
+        skip(newVal) {
+            console.log(`Skip changed to: ${newVal}`);
+        },
+        limit(newVal) {
+            console.log(`Limit changed to: ${newVal}`);
+        }
+    },
     computed: {
         ...mapState({
-            perPage: state => state.main.perPage,
-            page: state => state.main.page,
+            find: state => state.main.find,
+            skip: state => state.main.skip,
+            limit: state => state.main.limit,
             banners: state => state.main.banners,
+            total: state => state.main.total,
         }),
         // filteredBanners() {
         //     return this.banners.filter(banner =>
@@ -105,10 +115,10 @@ export default {
             }
 
             const find = this.searchValue || '';
-            const perPage = this.perPage || 10;
-            const page = this.page || 1;
+            const skip = this.skip || 0;
+            const limit = this.limit || 10;
 
-            const apiUrl = `${process.env.VUE_APP_API_URL}auth/banner?find=${find}&perPage=${perPage}&page=${page}`;
+            const apiUrl = `${process.env.VUE_APP_API_URL}auth/banner?find=${find}&skip=${skip}&limit=${limit}`;
             try {
                 await this.$store.dispatch('main/fetchResource', apiUrl);
             } catch (error) {
@@ -119,6 +129,10 @@ export default {
         },
         updateSearch(value) {
             this.searchValue = value;
+            this.fetchBanners();
+        },
+        updatePaginate(value) {
+            this.$store.commit('main/SET_SKIP', value);
             this.fetchBanners();
         },
         async deleteRecord(id) {

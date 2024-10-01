@@ -35,6 +35,9 @@ const Main = {
     TOGGLE_SIDEBAR(state) {
       state.isSidebarVisible = !state.isSidebarVisible;
     },
+    SET_SKIP(state, skip) {
+      state.skip = skip;
+    },
   },
   getters: {
     getCache: (state) => state.cache,
