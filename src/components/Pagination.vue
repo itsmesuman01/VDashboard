@@ -23,9 +23,9 @@ export default {
     },
     computed: {
         ...mapState({
-            skip: state => state.main.skip,
-            limit: state => state.main.limit,
-            total: state => state.main.total,
+            skip: state => state.source.skip,
+            limit: state => state.source.limit,
+            total: state => state.source.total,
         }),
     },
     methods: {
@@ -39,8 +39,8 @@ export default {
             const apiUrl = `${process.env.VUE_APP_API_URL}auth/${this.sendProp}?find=${this.find}&skip=${skip}&limit=${this.limit}`;
             try {
                 this.loading = true;
-                this.$store.commit('main/CLEAR_CACHE');
-                await this.$store.dispatch('main/fetchResource', apiUrl);
+                this.$store.commit('source/CLEAR_CACHE');
+                await this.$store.dispatch('source/fetchResource', apiUrl);
             } catch (error) {
                 console.warn(error);
             } finally {

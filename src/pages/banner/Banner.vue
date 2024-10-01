@@ -77,21 +77,13 @@ export default {
             searchValue: ''
         };
     },
-    watch: {
-        skip(newVal) {
-            console.log(`Skip changed to: ${newVal}`);
-        },
-        limit(newVal) {
-            console.log(`Limit changed to: ${newVal}`);
-        }
-    },
     computed: {
         ...mapState({
-            find: state => state.main.find,
-            skip: state => state.main.skip,
-            limit: state => state.main.limit,
-            banners: state => state.main.banners,
-            total: state => state.main.total,
+            find: state => state.source.find,
+            skip: state => state.banner.skip,
+            limit: state => state.source.limit,
+            banners: state => state.banner.banners,
+            total: state => state.banner.total,
         }),
         // filteredBanners() {
         //     return this.banners.filter(banner =>
@@ -120,7 +112,7 @@ export default {
 
             const apiUrl = `${process.env.VUE_APP_API_URL}auth/banner?find=${find}&skip=${skip}&limit=${limit}`;
             try {
-                await this.$store.dispatch('main/fetchResource', apiUrl);
+                await this.$store.dispatch('banner/fetchResource', apiUrl);
             } catch (error) {
                 console.warn(error);
             } finally {
@@ -132,7 +124,7 @@ export default {
             this.fetchBanners();
         },
         updatePaginate(value) {
-            this.$store.commit('main/SET_SKIP', value);
+            this.$store.commit('banner/SET_SKIP', value);
             this.fetchBanners();
         },
         async deleteRecord(id) {

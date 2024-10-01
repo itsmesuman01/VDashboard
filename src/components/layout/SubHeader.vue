@@ -45,7 +45,10 @@ export default {
     },
     computed: {
         ...mapState({
-            total: state => state.main.total,
+            // total: state => state.user.total,
+            total() {
+                return this.$store.state[this.title].total;
+            }
         })
     },
     watch: {

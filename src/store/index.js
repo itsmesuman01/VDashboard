@@ -1,8 +1,12 @@
 import { createStore } from "vuex";
-import Main from './source.js'
+import Source from "./source.js";
+import User from "./user.js";
+import Banner from "./banner.js";
 
 export default createStore({
-    modules: {
-        main: Main,
-    }
+  modules: {
+    source: Source,
+    user: User,
+    banner: Banner,
+  },
 });
