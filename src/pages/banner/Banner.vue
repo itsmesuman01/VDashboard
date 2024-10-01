@@ -36,6 +36,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div>Showing {{ banners.length }} of {{ (this.skip === 0) ? this.total : banners.length }} records</div>
                 </div>
                 <!-- <Pagination sendProp="banner" /> -->
             </div>

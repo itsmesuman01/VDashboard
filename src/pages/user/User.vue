@@ -40,6 +40,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div>Showing {{ users.length }} of {{ (this.skip === 0) ? this.total : users.length }} records</div>
                 </div>
                 <!-- <Pagination sendProp="user" /> -->
             </div>
