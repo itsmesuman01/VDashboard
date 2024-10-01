@@ -37,7 +37,7 @@
                         </tbody>
                     </table>
                 </div>
-                <Pagination sendProp="banner" />
+                <!-- <Pagination sendProp="banner" /> -->
             </div>
             <div class="footer">
                 <Footer />
@@ -57,7 +57,7 @@ import axios from 'axios';
 import {
     mapState
 } from 'vuex';
-import Pagination from '@/components/Pagination.vue';
+// import Pagination from '@/components/Pagination.vue';
 
 export default {
     name: 'BannerPage',
@@ -66,7 +66,7 @@ export default {
         SubHeader,
         Sidebar,
         Footer,
-        Pagination
+        // Pagination
     },
     data() {
         return {

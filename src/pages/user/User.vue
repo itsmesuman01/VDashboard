@@ -41,7 +41,7 @@
                         </tbody>
                     </table>
                 </div>
-                <Pagination sendProp="user" />
+                <!-- <Pagination sendProp="user" /> -->
             </div>
             <div class="footer">
                 <Footer />
@@ -62,7 +62,7 @@ import {
     mapState,
     mapGetters
 } from 'vuex';
-import Pagination from '@/components/Pagination.vue';
+// import Pagination from '@/components/Pagination.vue';
 
 export default {
     name: 'UserPage',
@@ -71,7 +71,7 @@ export default {
         SubHeader,
         Sidebar,
         Footer,
-        Pagination
+        // Pagination
     },
     data() {
         return {

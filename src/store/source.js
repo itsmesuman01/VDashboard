@@ -53,7 +53,7 @@ const Main = {
           },
         });
         const { users, banners, total } = response;
-        commit("SET_TOTAL", total);
+        (total != 0) ? commit("SET_TOTAL", total) : '';
         commit("SET_USER", users);
         commit("SET_BANNER", banners);
       } catch (error) {
