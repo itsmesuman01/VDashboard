@@ -23,7 +23,7 @@ const User = {
     },
   },
   actions: {
-    async fetchResource({ commit }, url) {
+    async fetchResource({ state, commit }, url) {
       commit("SET_LOADING", true);
       const token = localStorage.getItem("access_token");
       try {
@@ -33,7 +33,7 @@ const User = {
           },
         });
         const { users, total } = response;
-        total != 0 ? commit("SET_TOTAL", total) : "";
+        if (state.skip == 0) commit("SET_TOTAL", total);
         commit("SET_USER", users);
       } catch (error) {
         console.warn(error);
