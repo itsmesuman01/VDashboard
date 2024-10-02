@@ -16,6 +16,14 @@ export function getCache() {
   return cache;
 }
 
+export function clearCacheSpecific(url) {
+  if (cache[url]) {
+    delete cache[url];
+  } else {
+    console.warn(`No cache entry found for URL: ${url}`);
+  }
+}
+
 export function clearCache() {
   Object.keys(cache).forEach((key) => delete cache[key]);
 }

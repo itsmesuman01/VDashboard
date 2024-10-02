@@ -47,7 +47,7 @@
 <script>
 import { Header, Sidebar, Footer } from '../../components/layout';
 import axios from 'axios';
-import { fetchData } from '../../cacheService';
+import { fetchData, clearCacheSpecific } from '../../cacheService';
 
 export default {
     name: 'UserAddPage',
@@ -64,10 +64,8 @@ export default {
             return;
         }
 
-        const apiUrl = `${process.env.VUE_APP_API_URL}auth/role`;
-
         try {
-            const response = await fetchData(apiUrl, {
+            const response = await fetchData(`${this.apiUrl}auth/role`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -83,6 +81,7 @@ export default {
     },
     data() {
         return {
+            apiUrl: process.env.VUE_APP_API_URL,
             form: {
                 image: this.$route.query.image || '',
                 name: this.$route.query.name || '',
@@ -123,12 +122,13 @@ export default {
             }
 
             try {
-                const response = await axios.post(`${process.env.VUE_APP_API_URL}auth/user`, formData, {
+                const response = await axios.post(`${this.apiUrl}auth/user`, formData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     }
                 });
                 this.$showToast('PASS', response.data.message);
+                clearCacheSpecific(`${this.apiUrl}auth/user?find=${''}&skip=${0}&limit=${10}`);
                 setTimeout(() => this.$router.push({ name: 'User' }), 1500);
             } catch (error) {
                 this.$showToast("FAIL", error);
