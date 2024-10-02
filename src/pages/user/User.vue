@@ -79,7 +79,7 @@ export default {
     computed: {
         ...mapState({
             skip: state => state.user.skip,
-            limit: state => state.source.limit,
+            limit: state => state.limit,
             users: state => state.user.users,
             total: state => state.user.total,
         })

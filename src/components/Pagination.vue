@@ -23,26 +23,22 @@ export default {
     },
     computed: {
         ...mapState({
-            skip: state => state.source.skip,
-            limit: state => state.source.limit,
-            total: state => state.source.total,
+            skip: state => state.skip,
+            limit: state => state.limit,
+            total: state => state.total,
         }),
     },
     methods: {
         async myCallback(page) {
             this.page = page;
-            console.log('Page:', this.page);
-            console.log('Limit:', this.limit);
-            console.log('Total:', this.total);
-
             const skip = (this.page - 1) * this.limit;
             const apiUrl = `${process.env.VUE_APP_API_URL}auth/${this.sendProp}?find=${this.find}&skip=${skip}&limit=${this.limit}`;
             try {
                 this.loading = true;
-                this.$store.commit('source/CLEAR_CACHE');
-                await this.$store.dispatch('source/fetchResource', apiUrl);
+                this.$store.commit('CLEAR_CACHE');
+                await this.$store.dispatch('fetchResource', apiUrl);
             } catch (error) {
-                console.warn(error);
+                this.$showToast('FAIL', error);
             } finally {
                 this.loading = false;
             }

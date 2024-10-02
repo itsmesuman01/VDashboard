@@ -77,7 +77,7 @@ export default {
     computed: {
         ...mapState({
             skip: state => state.banner.skip,
-            limit: state => state.source.limit,
+            limit: state => state.limit,
             banners: state => state.banner.banners,
             total: state => state.banner.total,
         })

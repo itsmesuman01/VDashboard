@@ -24,7 +24,7 @@ export default {
         };
     },
     computed: {
-        ...mapState('source', {
+        ...mapState({
             isSidebarVisible: state => state.isSidebarVisible
         }),
     },
@@ -56,7 +56,7 @@ export default {
             this.$router.push({ name: 'Login' });
         },
         toggleSidebar() {
-            this.$store.commit('source/TOGGLE_SIDEBAR');
+            this.$store.commit('TOGGLE_SIDEBAR');
         }
     },
     watch: {

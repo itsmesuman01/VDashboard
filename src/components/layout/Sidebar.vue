@@ -27,7 +27,7 @@ import { mapState } from 'vuex'
 export default {
     name: 'SidebarPage',
     computed: {
-        ...mapState('source', {
+        ...mapState({
             isSidebarVisible: state => state.isSidebarVisible,
         }),
     },
