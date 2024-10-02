@@ -34,36 +34,27 @@
                                         :to="{ name: 'UserAdd', query: { id: item.id, image: item.image, name: item.name, password: item.password, email: item.email, role: item.roles.id } }">Edit
                                     </router-link>&nbsp;
                                     <button :disabled="!hasPermission('user.delete') || loading"
-                                        v-on:click="deleteRecord(item.id)">Delete
-                                    </button>
+                                        @click="openDeleteDialog(item.id)">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <div>Showing {{ users.length }} of {{ (this.skip === 0) ? this.total : users.length }} records</div>
                 </div>
-                <!-- <Pagination sendProp="user" /> -->
             </div>
             <div class="footer">
                 <Footer />
             </div>
         </div>
+        <DialogBox v-if="isDialogOpen" @confirm="deleteRecord(selectedId)" @cancel="closeDialog" />
     </div>
 </template>
 
 <script>
-import {
-    Header,
-    SubHeader,
-    Sidebar,
-    Footer
-} from '../../components/layout';
+import { Header, SubHeader, Sidebar, Footer } from '../../components/layout';
+import { DialogBox } from '../../components';
 import axios from 'axios'
-import {
-    mapState,
-    mapGetters
-} from 'vuex';
-// import Pagination from '@/components/Pagination.vue';
+import { mapState } from 'vuex';
 
 export default {
     name: 'UserPage',
@@ -72,7 +63,7 @@ export default {
         SubHeader,
         Sidebar,
         Footer,
-        // Pagination
+        DialogBox
     },
     data() {
         return {
@@ -80,24 +71,21 @@ export default {
             loading: true,
             envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
             defaultImageUrl: require('@/assets/images/defaultimage.webp'),
-            searchValue: ''
+            searchValue: '',
+            isDialogOpen: false,
+            selectedId: null
         };
     },
     computed: {
         ...mapState({
-            find: state => state.user.find,
             skip: state => state.user.skip,
             limit: state => state.source.limit,
             users: state => state.user.users,
             total: state => state.user.total,
-        }),
-        ...mapGetters('source', ['getCache']),
-        // filteredUsers() {
-        //     return this.users.filter(user => user.name.toLowerCase().includes(this.searchValue.toLowerCase()));
-        // }
+        })
     },
     async mounted() {
-        this.fetchUsers();
+        await this.fetchUsers();
     },
     methods: {
         hasPermission(permissionName) {
@@ -132,11 +120,15 @@ export default {
             this.$store.commit('user/SET_SKIP', value);
             this.fetchUsers();
         },
+        openDeleteDialog(id) {
+            this.selectedId = id;
+            this.isDialogOpen = true;
+        },
+        closeDialog() {
+            this.isDialogOpen = false;
+            this.selectedId = null;
+        },
         async deleteRecord(id) {
-            if (!confirm('Are you sure you want to delete this record?')) {
-                return;
-            }
-
             this.loading = true;
 
             try {
@@ -154,6 +146,7 @@ export default {
                 console.warn(error);
             } finally {
                 this.loading = false;
+                this.closeDialog();
             }
         }
     }

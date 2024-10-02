@@ -31,34 +31,28 @@
                                     <router-link class='button-link'
                                         :to="{ name: 'BannerAdd', query: { id: item.id, image: item.image, name: item.name, is_active: item.is_active } }">Edit</router-link>&nbsp;
                                     <button :disabled="!hasPermission('banner.delete') || loading"
-                                        v-on:click="deleteRecord(item.id)">Delete</button>
+                                        @click="openDeleteDialog(item.id)">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <div>Showing {{ banners.length }} of {{ (this.skip === 0) ? this.total : banners.length }} records</div>
+                    <div>Showing {{ banners.length }} of {{ (this.skip === 0) ? this.total : banners.length }} records
+                    </div>
                 </div>
-                <!-- <Pagination sendProp="banner" /> -->
             </div>
             <div class="footer">
                 <Footer />
             </div>
         </div>
+        <DialogBox v-if="isDialogOpen" @confirm="deleteRecord(selectedId)" @cancel="closeDialog" />
     </div>
 </template>
 
 <script>
-import {
-    Header,
-    SubHeader,
-    Sidebar,
-    Footer
-} from '../../components/layout';
+import { Header, SubHeader, Sidebar, Footer } from '../../components/layout';
+import { DialogBox } from '../../components';
 import axios from 'axios';
-import {
-    mapState
-} from 'vuex';
-// import Pagination from '@/components/Pagination.vue';
+import { mapState } from 'vuex';
 
 export default {
     name: 'BannerPage',
@@ -67,7 +61,7 @@ export default {
         SubHeader,
         Sidebar,
         Footer,
-        // Pagination
+        DialogBox
     },
     data() {
         return {
@@ -75,22 +69,18 @@ export default {
             loading: true,
             envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
             defaultImageUrl: require('@/assets/images/defaultimage.webp'),
-            searchValue: ''
+            searchValue: '',
+            isDialogOpen: false,
+            selectedId: null
         };
     },
     computed: {
         ...mapState({
-            find: state => state.source.find,
             skip: state => state.banner.skip,
             limit: state => state.source.limit,
             banners: state => state.banner.banners,
             total: state => state.banner.total,
-        }),
-        // filteredBanners() {
-        //     return this.banners.filter(banner =>
-        //         banner.name.toLowerCase().includes(this.searchValue.toLowerCase())
-        //     );
-        // }
+        })
     },
     async mounted() {
         await this.fetchBanners();
@@ -128,11 +118,15 @@ export default {
             this.$store.commit('banner/SET_SKIP', value);
             this.fetchBanners();
         },
+        openDeleteDialog(id) {
+            this.selectedId = id;
+            this.isDialogOpen = true;
+        },
+        closeDialog() {
+            this.isDialogOpen = false;
+            this.selectedId = null;
+        },
         async deleteRecord(id) {
-            if (!confirm('Are you sure you want to delete this record?')) {
-                return;
-            }
-
             this.loading = true;
 
             try {
@@ -150,6 +144,7 @@ export default {
                 console.warn(error);
             } finally {
                 this.loading = false;
+                this.closeDialog();
             }
         }
     }
