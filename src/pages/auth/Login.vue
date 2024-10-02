@@ -1,5 +1,6 @@
 <template>
     <div class="flex items-center justify-center h-screen bg-gray-100">
+        <div id="toastbar"></div>
         <div class="bg-white rounded-lg shadow-lg p-8 w-96">
             <img class="mx-auto mb-6" src="../../assets/logo.png" alt="Logo" />
             <h1 class="text-2xl font-semibold text-center mb-6">LOGIN</h1>
@@ -45,11 +46,6 @@ export default {
     },
     methods: {
         async submitForm() {
-            if (!this.form.email || !this.form.password) {
-                alert('Please fill out all fields.');
-                return;
-            }
-
             this.loading = true;
 
             await axios.post(`${process.env.VUE_APP_API_URL}login`, {
@@ -61,14 +57,11 @@ export default {
                     const permissions = JSON.stringify(user.roles.permissions);
                     localStorage.setItem('access_token', access_token);
                     localStorage.setItem('permissions', permissions);
-                    alert(message);
-                    this.$router.push({
-                        name: 'Home'
-                    })
+                    this.$showToast('PASS', message);
+                    setTimeout(() => this.$router.push({ name: 'Home' }), 1500);
                 })
                 .catch(error => {
-                    console.warn(error)
-                    alert(error.response.data.message);
+                    this.$showToast('FAIL', error.response.data.message);
                 })
                 .finally(() => {
                     this.loading = false;
