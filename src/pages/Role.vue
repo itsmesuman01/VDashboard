@@ -31,21 +31,21 @@
                         </table>
                     </div>
                     <div v-else>
-                        <table>
+                        <table class="mb-5">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Create</th>
-                                    <th>Read</th>
-                                    <th>Update</th>
-                                    <th>Delete</th>
+                                    <th class="text-center">Id</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Create</th>
+                                    <th class="text-center">Read</th>
+                                    <th class="text-center">Update</th>
+                                    <th class="text-center">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="(permType, index) in permissionCategories" :key="index">
                                     <td class="text-center">{{ index + 1 }}</td>
-                                    <td>{{ $toCamelCase(permType.name) }}</td>
+                                    <td class="text-center">{{ $toCamelCase(permType.name) }}</td>
                                     <td>
                                         <input type="checkbox" :checked="permType.create"
                                             @change="updatePermission(permType.name, 'create', $event)" />

@@ -5,8 +5,8 @@
             <div class="header mb-4">
                 <Header />
             </div>
-            <div class="section flex justify-center items-center bg-white rounded-lg shadow-md p-6">
-                <div class="w-[900px] border-[10px] border-blue-400 rounded-[100px] p-10">
+            <div class="section flex justify-center items-center bg-white shadow-md">
+                <div class="w-[600px] border-[3px] border-blue-400 pt-20 pb-20">
                     <h1 class="text-2xl font-bold text-center mb-6">
                         {{ (this.$route.query.id == null) ? 'CREATE' : 'UPDATE' }} BANNER
                     </h1>
