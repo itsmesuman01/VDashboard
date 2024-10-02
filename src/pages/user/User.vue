@@ -5,7 +5,7 @@
             <div class="header">
                 <Header />
             </div>
-            <SubHeader :title="title" @search="updateSearch" @paginate="updatePaginate" />
+            <SubHeader :title="title" @search="updateSearch" @paginate="updatePaginate" @limit="updateLimit" />
             <div class="section">
                 <div class="table-container">
                     <table v-if="hasPermission('user.read')">
@@ -118,6 +118,10 @@ export default {
         },
         updatePaginate(value) {
             this.$store.commit('user/SET_SKIP', value);
+            this.fetchUsers();
+        },
+        updateLimit(value) {
+            this.$store.commit('SET_LIMIT', value);
             this.fetchUsers();
         },
         openDeleteDialog(id) {

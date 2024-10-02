@@ -15,6 +15,9 @@ export default createStore({
     isSidebarVisible: true,
   },
   mutations: {
+    SET_LIMIT(state, limit) {
+      state.limit = limit;
+    },
     CLEAR_CACHE() {
       clearCache();
     },

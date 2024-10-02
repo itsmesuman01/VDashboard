@@ -4,6 +4,16 @@
             <div class="p-2">
                 <select required
                     class="block w-full p-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+                    @change="onLimit">
+                    <option value="">Show limit</option>
+                    <option v-for="(item, index) in limitValues" :key="index" :value="item">
+                        {{ item }}
+                    </option>
+                </select>
+            </div>
+            <div class="p-2">
+                <select required
+                    class="block w-full p-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
                     @change="onPaginate">
                     <option value="">Show entries</option>
                     <option v-for="(item, index) in dropdownPagination" :key="index" :value="item">
@@ -35,6 +45,7 @@ export default {
     },
     data() {
         return {
+            limitValues: [10, 20, 30, 40, 50, 100],
             timeout: null,
             dropdownPagination: [],
             find: ''
@@ -65,6 +76,10 @@ export default {
         onPaginate(event) {
             const paginate = parseInt(event.target.value);
             this.$emit('paginate', paginate - 10);
+        },
+        onLimit(event) {
+            const limit = parseInt(event.target.value);
+            this.$emit('limit', limit);
         },
         onSearch(event) {
             const searchTerm = event.target.value;
