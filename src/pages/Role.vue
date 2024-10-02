@@ -201,10 +201,10 @@ export default {
                         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                     },
                 });
-                this.$showToast('PASS', response);
-                this.$router.push({ name: 'Home' });
+                this.$showToast('PASS', response.data.message);
+                setTimeout(() => this.$router.push({ name: 'Home' }), 1500);
             } catch (error) {
-                this.$showToast('PASS', error);
+                this.$showToast('FAIL', error);
             } finally {
                 this.loading = false;
             }
