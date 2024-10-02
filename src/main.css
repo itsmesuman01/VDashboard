@@ -245,7 +245,7 @@ thead {
   width: 100%;
   height: 5px;
   background: green;
-  animation: anim 3s linear forwards;
+  animation: anim 1.5s linear forwards;
 }
 
 .toast.error::after {

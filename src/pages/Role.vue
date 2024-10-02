@@ -121,7 +121,7 @@ export default {
             const { roles } = response;
             this.roles = roles;
         } catch (error) {
-            console.warn(error);
+            this.$showToast("FAIL", error);
         } finally {
             this.loading = false;
         }
@@ -152,7 +152,7 @@ export default {
 
                 this.showrole = 1;
             } catch (error) {
-                console.warn(error);
+                this.$showToast("FAIL", error);
             } finally {
                 this.loading = false;
             }
@@ -192,7 +192,7 @@ export default {
             }).filter(id => id !== null);
 
             try {
-                await axios.post(`${process.env.VUE_APP_API_URL}auth/role`, {
+                const response = await axios.post(`${process.env.VUE_APP_API_URL}auth/role`, {
                     role_id: roleId,
                     store_permissions_id: storePermissionsIds,
                 }, {
@@ -201,11 +201,10 @@ export default {
                         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                     },
                 });
-                alert('Permissions updated successfully');
+                this.$showToast('PASS', response);
                 this.$router.push({ name: 'Home' });
             } catch (error) {
-                console.warn(error);
-                alert(error.message || 'An error occurred while updating permissions.');
+                this.$showToast('PASS', error);
             } finally {
                 this.loading = false;
             }

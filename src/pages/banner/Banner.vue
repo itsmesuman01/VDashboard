@@ -105,7 +105,7 @@ export default {
             try {
                 await this.$store.dispatch('banner/fetchResource', apiUrl);
             } catch (error) {
-                console.warn(error);
+                this.$showToast("FAIL", error);
             } finally {
                 this.loading = false;
             }
@@ -141,7 +141,7 @@ export default {
                 this.banners = this.banners.filter(banner => banner.id !== id);
                 return this.$showToast('PASS', 'Successfully Deleted');
             } catch (error) {
-                console.warn(error);
+                this.$showToast("FAIL", error);
             } finally {
                 this.loading = false;
                 this.closeDialog();

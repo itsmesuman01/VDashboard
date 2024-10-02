@@ -18,7 +18,7 @@
                                 @change="uploadFile" />
                             <input v-model="form.name" type="text" placeholder="Enter Name" required
                                 class="block w-full p-2 mb-4 border border-gray-300 rounded" />
-                            <select v-model="form.is_active"
+                            <select v-model="form.is_active" required
                                 class="block w-full p-2 mb-4 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
                                 <option value="" disabled v-if="!isEdit">Select</option>
                                 <option value="1">Active</option>
@@ -77,7 +77,7 @@ export default {
             const { records } = response;
             this.roles = records;
         } catch (error) {
-            console.warn(error);
+            this.$showToast("FAIL", error);
         } finally {
             this.loading = false;
         }
@@ -99,8 +99,8 @@ export default {
     },
     methods: {
         async submitForm() {
-            if (!this.form.name) {
-                alert('Please fill out all fields.');
+            if (!this.form.image) {
+                this.$showToast("FAIL", 'Please upload image');
                 return;
             }
 
@@ -126,9 +126,9 @@ export default {
                     }
                 });
                 this.$showToast('PASS', response.data.message);
-                setTimeout(() => this.$router.push({ name: 'Banner' }), 3000);
+                setTimeout(() => this.$router.push({ name: 'Banner' }), 1500);
             } catch (error) {
-                console.warn(error);
+                this.$showToast("FAIL", error);
             } finally {
                 this.loading = false;
             }

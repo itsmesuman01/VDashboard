@@ -26,20 +26,24 @@ export function hasPermission(permissionName) {
 }
 
 export function showToast(message, value) {
+  let iconClass = "fa-solid fa-circle-check";
+  let toastClass = "";
   if (message === "PASS") {
-    message = '<i class="fa-solid fa-circle-check"></i> ' + value;
+    message = `<i class="${iconClass}"></i> ${value}`;
+    toastClass = "success";
   } else if (message === "FAIL") {
-    message = '<i class="fa-solid fa-circle-xmark"></i> ' + value;
+    iconClass = "fa-solid fa-circle-xmark";
+    message = `<i class="${iconClass}"></i> ${value}`;
+    toastClass = "error";
   } else {
-    message =
-      '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ' + value;
+    iconClass = "fa fa-exclamation-circle";
+    message = `<i class="${iconClass}" aria-hidden="true"></i> ${value}`;
+    toastClass = "invalid";
   }
   let toastBox = document.getElementById("toastbar");
-
   let box = document.createElement("div");
-  box.classList.add("toast");
+  box.classList.add("toast", toastClass);
   box.innerHTML = message;
-
   let closeButton = document.createElement("span");
   closeButton.innerHTML = "&times;";
   closeButton.classList.add("close-button");
@@ -49,19 +53,14 @@ export function showToast(message, value) {
       box.remove();
     }, 500);
   };
-
   box.appendChild(closeButton);
   toastBox.appendChild(box);
-
-  if (message.includes("Failed to submit")) box.classList.add("error");
-  if (message.includes("Something failed")) box.classList.add("invalid");
-
   setTimeout(() => {
     box.style.opacity = 0;
     setTimeout(() => {
       box.remove();
     }, 500);
-  }, 3000);
+  }, 1500);
 }
 
 export function toCamelCase(str) {

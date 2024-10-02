@@ -107,7 +107,7 @@ export default {
             try {
                 await this.$store.dispatch('user/fetchResource', apiUrl);
             } catch (error) {
-                console.warn(error);
+                this.$showToast("FAIL", error);
             } finally {
                 this.loading = false;
             }
@@ -143,7 +143,7 @@ export default {
                 this.users = this.users.filter(user => user.id !== id);
                 return this.$showToast('PASS', 'Successfully Deleted');
             } catch (error) {
-                console.warn(error);
+                this.$showToast("FAIL", error);
             } finally {
                 this.loading = false;
                 this.closeDialog();

@@ -76,7 +76,7 @@ export default {
             const { roles } = response;
             this.roles = roles;
         } catch (error) {
-            console.warn(error);
+            this.$showToast("FAIL", error);
         } finally {
             this.loading = false;
         }
@@ -100,10 +100,10 @@ export default {
     },
     methods: {
         async submitForm() {
-            if (!this.form.name || !this.form.email || (!this.isEdit) ? !this.form.password : '') {
-                alert('Please fill out all fields.');
-                return;
-            }
+            // if (!this.form.image) {
+            //     this.$showToast("FAIL", 'Please upload image');
+            //     return;
+            // }
 
             this.loading = true;
 
@@ -128,10 +128,10 @@ export default {
                         Authorization: `Bearer ${token}`,
                     }
                 });
-                alert(response.data.message);
-                this.$router.push({ name: 'User' });
+                this.$showToast('PASS', response.data.message);
+                setTimeout(() => this.$router.push({ name: 'User' }), 1500);
             } catch (error) {
-                console.warn(error);
+                this.$showToast("FAIL", error);
             } finally {
                 this.loading = false;
             }
