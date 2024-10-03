@@ -24,6 +24,14 @@ export default {
         Header,
         Sidebar,
         Footer,
+    },
+    mounted() {
+        const token = localStorage.getItem('access_token');
+
+        if (!token) {
+            this.$router.push({ name: 'Login' });
+            return;
+        }
     }
 }
 </script>

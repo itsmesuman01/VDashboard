@@ -23,7 +23,7 @@
                             <tr v-for="(item, index) in users" :key="item.id">
                                 <td class="text-center">{{ index + 1 }}</td>
                                 <td class="image-cell">
-                                    <img :src="item.image ? `${envImageUrl}${item.image}` : defaultImageUrl"
+                                    <img :src="item.image ? `${apiImageUrl}${item.image}` : defaultImageUrl"
                                         alt="User Image" class="image-cell-td" />
                                 </td>
                                 <td>{{ item.name }}</td>
@@ -67,9 +67,10 @@ export default {
     },
     data() {
         return {
+            apiUrl: process.env.VUE_APP_API_URL,
+            apiImageUrl: process.env.VUE_APP_API_IMAGE_URL,
             title: 'user',
             loading: true,
-            envImageUrl: process.env.VUE_APP_API_IMAGE_URL,
             defaultImageUrl: require('@/assets/images/defaultimage.webp'),
             searchValue: '',
             isDialogOpen: false,
@@ -103,9 +104,8 @@ export default {
             const skip = this.skip || 0;
             const limit = this.limit || 10;
 
-            const apiUrl = `${process.env.VUE_APP_API_URL}auth/user?find=${find}&skip=${skip}&limit=${limit}`;
             try {
-                await this.$store.dispatch('user/fetchResource', apiUrl);
+                await this.$store.dispatch('user/fetchResource', `${this.apiUrl}auth/user?find=${find}&skip=${skip}&limit=${limit}`);
             } catch (error) {
                 this.$showToast("FAIL", error);
             } finally {

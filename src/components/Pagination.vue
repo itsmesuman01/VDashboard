@@ -16,6 +16,7 @@ export default {
     },
     data() {
         return {
+            apiUrl: process.env.VUE_APP_API_URL,
             page: 1,
             loading: true,
             find: ''
@@ -32,11 +33,10 @@ export default {
         async myCallback(page) {
             this.page = page;
             const skip = (this.page - 1) * this.limit;
-            const apiUrl = `${process.env.VUE_APP_API_URL}auth/${this.sendProp}?find=${this.find}&skip=${skip}&limit=${this.limit}`;
             try {
                 this.loading = true;
                 this.$store.commit('CLEAR_CACHE');
-                await this.$store.dispatch('fetchResource', apiUrl);
+                await this.$store.dispatch('fetchResource', `${this.apiUrl}auth/${this.sendProp}?find=${this.find}&skip=${skip}&limit=${this.limit}`);
             } catch (error) {
                 this.$showToast('FAIL', error);
             } finally {

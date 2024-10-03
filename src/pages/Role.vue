@@ -92,6 +92,7 @@ export default {
     },
     data() {
         return {
+            apiUrl: process.env.VUE_APP_API_URL,
             roles: [],
             loading: true,
             showrole: 0,
@@ -109,10 +110,8 @@ export default {
             return;
         }
 
-        const apiUrl = `${process.env.VUE_APP_API_URL}auth/role`;
-
         try {
-            const response = await fetchData(apiUrl, {
+            const response = await fetchData(`${this.apiUrl}auth/role`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -134,9 +133,8 @@ export default {
             this.loading = true;
             this.currentRoleId = id;
 
-            const apiUrl = `${process.env.VUE_APP_API_URL}auth/role/edit?id=${id}`;
             try {
-                const response = await axios.get(apiUrl, {
+                const response = await axios.get(`${this.apiUrl}auth/role/edit?id=${id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                     },
