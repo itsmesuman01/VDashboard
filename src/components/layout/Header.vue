@@ -1,11 +1,12 @@
 <template>
-    <div class="head flex items-center bg-[#006aff] h-[60px] pl-[1rem]">
+    <div class="flex items-center bg-[#006aff] h-[60px] pl-[1rem]">
         <i v-if="isToggleVisible" @click="toggleSidebar"
             class="fas fa-bars text-blue-900 hover:text-blue-700 transition duration-200 cursor-pointer p-2 rounded-lg hover:bg-blue-100"
             aria-label="Toggle sidebar"></i>
-        <div class="ml-auto">
-            <router-link to="/home">HOME</router-link>
-            <a @click.prevent="logout">LOGOUT</a>
+        <div class="ml-[97%]">
+            <div class="flex items-center cursor-pointer" @click.prevent="logout">
+                <i class="fa fa-sign-out mr-2 text-white" aria-hidden="true"></i>
+            </div>
         </div>
     </div>
     <div id="toastbar"></div>
@@ -64,16 +65,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-.head a,
-.head router-link {
-    color: #f2f2f2;
-    text-align: center;
-    padding: 10px 14px;
-    text-decoration: none;
-    font-size: 16px;
-    margin-right: 4px;
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-}
-</style>
