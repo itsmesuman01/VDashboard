@@ -10,6 +10,8 @@ import User from './pages/user/User.vue'
 import UserAdd from './pages/user/UserAdd.vue'
 import Banner from './pages/banner/Banner.vue'
 import BannerAdd from './pages/banner/BannerAdd.vue'
+import Product from './pages/product/Product.vue'
+import ProductAdd from './pages/product/ProductAdd.vue'
 import PageNotFound from './components/PageNotFound.vue'
 
 const routes = [
@@ -62,6 +64,16 @@ const routes = [
         name: 'BannerAdd',
         path: '/banner-add',
         component: BannerAdd
+    },
+    {
+        name: 'Product',
+        path: '/product',
+        component: Product
+    },
+    {
+        name: 'ProductAdd',
+        path: '/product-add',
+        component: ProductAdd
     },
     {
         name: 'Role',

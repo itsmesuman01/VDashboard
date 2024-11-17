@@ -22,6 +22,12 @@
                     <div><router-link to="/banner">Banner</router-link></div>
                 </div>
             </li>
+            <li v-if="hasPermission('product.read')">
+                <div class="flex mx-10">
+                    <div><i class="fas fa-image text-white mt-4" aria-hidden="true"></i></div>
+                    <div><router-link to="/product">Product</router-link></div>
+                </div>
+            </li>
             <li @click="toggleSettings">
                 <div class="flex mx-10 text-white">
                     <div><i class="fas fa-cog mt-4" aria-hidden="true"></i></div>
