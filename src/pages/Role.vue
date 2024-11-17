@@ -47,20 +47,40 @@
                                     <td class="text-center">{{ index + 1 }}</td>
                                     <td class="text-center">{{ $toCamelCase(permType.name) }}</td>
                                     <td>
-                                        <input type="checkbox" :checked="permType.create"
-                                            @change="updatePermission(permType.name, 'create', $event)" />
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" :checked="permType.create"
+                                                @change="updatePermission(permType.name, 'create', $event)"
+                                                class="sr-only peer" />
+                                            <span
+                                                class="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-green-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:rounded-full after:transition-all"></span>
+                                        </label>
                                     </td>
                                     <td>
-                                        <input type="checkbox" :checked="permType.read"
-                                            @change="updatePermission(permType.name, 'read', $event)" />
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" :checked="permType.read"
+                                                @change="updatePermission(permType.name, 'read', $event)"
+                                                class="sr-only peer" />
+                                            <span
+                                                class="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:rounded-full after:transition-all"></span>
+                                        </label>
                                     </td>
                                     <td>
-                                        <input type="checkbox" :checked="permType.update"
-                                            @change="updatePermission(permType.name, 'update', $event)" />
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" :checked="permType.update"
+                                                @change="updatePermission(permType.name, 'update', $event)"
+                                                class="sr-only peer" />
+                                            <span
+                                                class="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-yellow-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:rounded-full after:transition-all"></span>
+                                        </label>
                                     </td>
                                     <td>
-                                        <input type="checkbox" :checked="permType.delete"
-                                            @change="updatePermission(permType.name, 'delete', $event)" />
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" :checked="permType.delete"
+                                                @change="updatePermission(permType.name, 'delete', $event)"
+                                                class="sr-only peer" />
+                                            <span
+                                                class="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-red-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:rounded-full after:transition-all"></span>
+                                        </label>
                                     </td>
                                 </tr>
                             </tbody>
